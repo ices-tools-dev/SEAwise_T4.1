@@ -19,8 +19,8 @@ library(ggthemes)
 library(openxlsx)
 
 
-datPath                               <- "Systematic Reviews/Analysis Task 4.1/Routput/"
-outPath                               <- "Systematic Reviews/Analysis Task 4.1/Routput/Manuscript/"
+datPath                               <- "Routput/"
+outPath                               <- "Routput/Manuscript/"
 
 
 #-----------------------------------------------#

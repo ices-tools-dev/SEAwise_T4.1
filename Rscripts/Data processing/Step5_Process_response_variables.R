@@ -17,7 +17,7 @@ library(data.table)
 library(splitstackshape)
 library(stringr)
 
-datPath                               <- "Systematic Reviews/Analysis Task 4.1/Routput/"
+datPath                               <- "Routput/"
 
 #-----------------------------------------------#
 # Read in data

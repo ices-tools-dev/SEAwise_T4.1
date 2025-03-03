@@ -15,7 +15,7 @@ rm(list = ls())
 #-----------------------------------------------
 
 # Set paths
-scriptPath                               <- "Systematic Reviews/Analysis Task 4.1/Rscripts/Data processing/"
+scriptPath                               <- "Rscripts/Data processing/"
 
 # Create local environment for sourcing of scripts - this avoids that all produced objects end up in the global environment
 localEnv                          <- new.env()

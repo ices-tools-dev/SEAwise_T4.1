@@ -21,8 +21,8 @@ rm(list = ls())
 library(openxlsx)
 
 
-datPath                               <- "Systematic Reviews/Analysis Task 4.1/Routput/"
-outPath                               <- "Systematic Reviews/Analysis Task 4.1/Routput/Manuscript/Database/"
+datPath                               <- "Routput/"
+outPath                               <- "Routput/Manuscript/Database/"
 
 
 #-----------------------------------------------#

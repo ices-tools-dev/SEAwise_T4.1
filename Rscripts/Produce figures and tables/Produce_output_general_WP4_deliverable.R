@@ -25,9 +25,9 @@ library(splitstackshape)
 library(ggthemes)
 library(ggsankey)
 
-datPath                               <- "Systematic Reviews/Analysis Task 4.1/Data_Extraction_Files/" 
-outPath                               <- "Systematic Reviews/Analysis Task 4.1/Routput/"
-GISpath                               <- "Systematic Reviews/Analysis Task 4.1/GIS/"
+datPath                               <- "Data_Extraction_Files/" 
+outPath                               <- "Routput/"
+GISpath                               <- "GIS/"
 
 ################################################
 #-----------------------------------------------

@@ -22,8 +22,8 @@ library(data.table)
 # library(sf)
 
 
-datPath                               <- "Systematic Reviews/Analysis Task 4.1/Routput/"
-outPath                               <- "Systematic Reviews/Analysis Task 4.1/Routput/Manuscript/"
+datPath                               <- "Routput/"
+outPath                               <- "Routput/Manuscript/"
 
 #-----------------------------------------------#
 # Read in data

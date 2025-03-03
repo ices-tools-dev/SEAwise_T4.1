@@ -17,8 +17,8 @@ library(data.table)
 library(stringr)
 library(worms)
 
-datPath                              <- "Systematic Reviews/Analysis Task 4.1/Routput/"
-outPath                              <- "Systematic Reviews/Analysis Task 4.1/Routput/Manuscript/"
+datPath                              <- "Routput/"
+outPath                              <- "Routput/"
 
 #-----------------------------------------------#
 # Read in data
@@ -166,8 +166,8 @@ if(dataset == "cropped"){
   # Add (created) worms data to dat1.rds
   #-----------------------------------------------#
   rm(list=ls())
-  datPath                              <- "Systematic Reviews/Analysis Task 4.1/Routput/"
-  outPath                              <- "Systematic Reviews/Analysis Task 4.1/Routput/Manuscript/"
+  datPath                              <- "Routput/"
+  outPath                              <- "Routput/"
   
   dat1                                 <- readRDS(paste0(outPath, "dat1a.rds"))
   specsIDed                            <- readRDS(paste0(outPath, "specsIDed3.rds"))
@@ -182,8 +182,8 @@ if(dataset == "cropped"){
   # Check consistency between taxonomy and ecosystem component level: Benthos
   #-----------------------------------------------#
   rm(list=ls())
-  datPath                              <- "Systematic Reviews/Analysis Task 4.1/Routput/"
-  outPath                              <- "Systematic Reviews/Analysis Task 4.1/Routput/Manuscript/"
+  datPath                              <- "Routput/"
+  outPath                              <- "Routput/"
   
   dat1                                 <- readRDS(paste0(outPath, "dat1b.rds"))
   dat2                                 <- dat1[,c("Species.taxonomic.group.s.", "Ecosystem.component_level1", 
@@ -231,8 +231,8 @@ if(dataset == "cropped"){
   # Check consistency between taxonomy and ecosystem component level: focus on non-taxonomic descriptions
   #-----------------------------------------------#
   rm(list=ls())
-  datPath                              <- "Systematic Reviews/Analysis Task 4.1/Routput/"
-  outPath                              <- "Systematic Reviews/Analysis Task 4.1/Routput/Manuscript/"
+  datPath                              <- "Routput/"
+  outPath                              <- "Routput/"
   
   data                                 <- readRDS(data, file=paste0(datPath, "data.rds"))
   dat1                                 <- readRDS(paste0(outPath, "dat1b.rds"))
@@ -306,8 +306,8 @@ if(dataset == "cropped"){
   # Update November 8 2022: Correct taxonomic descriptions in original dataset; remove non-taxonomic descriptions.
   #-----------------------------------------------#
   rm(list=ls())
-  datPath                              <- "Systematic Reviews/Analysis Task 4.1/Routput/"
-  outPath                              <- "Systematic Reviews/Analysis Task 4.1/Routput/Manuscript/"
+  datPath                              <- "Routput/"
+  outPath                              <- "Routput/"
   
   # load original dataset
   data                                 <- readRDS(file=paste0(datPath, "data.rds"))

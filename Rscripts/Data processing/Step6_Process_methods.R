@@ -18,7 +18,7 @@ library(splitstackshape)
 library(stringr)
 library(openxlsx)
 
-datPath                               <- "Systematic Reviews/Analysis Task 4.1/Routput/"
+datPath                               <- "Routput/"
 
 #-----------------------------------------------#
 # Read in data

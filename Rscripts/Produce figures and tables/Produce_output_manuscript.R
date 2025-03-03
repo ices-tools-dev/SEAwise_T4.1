@@ -36,9 +36,9 @@ library(ggforce)
 library(patchwork)
 
 
-datPath                               <- "Systematic Reviews/Analysis Task 4.1/Routput/"
-outPath                               <- "Systematic Reviews/Analysis Task 4.1/Routput/Manuscript/"
-GISpath                               <- "Systematic Reviews/Analysis Task 4.1/GIS/"
+datPath                               <- "Routput/"
+outPath                               <- "Routput/Manuscript/"
+GISpath                               <- "GIS/"
 
 
 #-----------------------------------------------#
@@ -2196,7 +2196,7 @@ ggsave(plot = p,
 #-----------------------------------------------#
 
 # Set path
-outPathPET                           <- "Systematic Reviews/Analysis Task 4.1/Routput/Manuscript/bycatch case study/"
+outPathPET                           <- "Routput/Manuscript/bycatch case study/"
 
 
 #-----------------------------------------------#
@@ -2204,7 +2204,7 @@ outPathPET                           <- "Systematic Reviews/Analysis Task 4.1/Ro
 #-----------------------------------------------#
 
 ### Load list of PET species - same used for screening and data extraction
-petList                              <- read.xlsx("Systematic Reviews/Analysis Task 4.1/PET species/PET_list_adjusted.xlsx", sheet = 1)
+petList                              <- read.xlsx("PET species/PET_list_adjusted.xlsx", sheet = 1)
 
 ### Check taxonomy against WoRMS
 
@@ -2215,16 +2215,16 @@ speciesList <- speciesList[!speciesList$Taxon %in% c("Hydrobates castro","Hydrob
 
 fileName                            <- "taxonomy_PET.csv"
 
-if(!file.exists(paste0("Systematic Reviews/Analysis Task 4.1/PET species/",fileName))){
+if(!file.exists(paste0("PET species/",fileName))){
   tax                                 <- wormsbymatchnames(subset(speciesList, group==1)$Taxon, marine_only = FALSE)
   for(iGr in 2:max(speciesList$group)){
     print(iGr)
     tax2                           <- wormsbymatchnames(subset(speciesList, group==iGr)$Taxon, marine_only = FALSE)
     tax                            <- rbind(tax, tax2)
   }
-  write.csv(tax, paste0("Systematic Reviews/Analysis Task 4.1/PET species/",fileName))
+  write.csv(tax, paste0("PET species/",fileName))
 } else {
-  tax                                 <- read.csv(paste0("Systematic Reviews/Analysis Task 4.1/PET species/",fileName))
+  tax                                 <- read.csv(paste0(PET species/",fileName))
 }
 
 # Add valid names to the PET list

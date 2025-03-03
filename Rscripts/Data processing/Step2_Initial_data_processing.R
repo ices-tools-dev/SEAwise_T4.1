@@ -19,8 +19,8 @@ library(stringr)
 library(openxlsx)
 
 
-outPath                               <- "Systematic Reviews/Analysis Task 4.1/Routput/"
-GISpath                               <- "Systematic Reviews/Analysis Task 4.1/GIS"
+outPath                               <- "Routput/"
+GISpath                               <- "GIS"
 
 
 ################################################-
@@ -203,10 +203,10 @@ if(dataset == "full"){
   #applicable
   
   ## Load search results
-  sco1 <- read.csv(file = "Systematic Reviews/Analysis Task 4.1/Search/Raw search results/E4_Scopus_20220110.csv", header = TRUE, encoding = "UTF-8")
-  sco2 <- read.csv(file = "Systematic Reviews/Analysis Task 4.1/Search/Raw search results/E4_Scopus_20220204.csv", header = TRUE, encoding = "UTF-8")
+  sco1 <- read.csv(file = "Search/Raw search results/E4_Scopus_20220110.csv", header = TRUE, encoding = "UTF-8")
+  sco2 <- read.csv(file = "Search/Raw search results/E4_Scopus_20220204.csv", header = TRUE, encoding = "UTF-8")
   sco  <- rbind(sco1, sco2)
-  wos  <- read.xlsx(xlsxFile = "Systematic Reviews/Analysis Task 4.1/Search/Raw search results/E4_WebOfScience_20220110.xlsx", sheet = 1)
+  wos  <- read.xlsx(xlsxFile = "Search/Raw search results/E4_WebOfScience_20220110.xlsx", sheet = 1)
   
   ## Reformat and simplify Scopus Record format
   colnames(sco)[colnames(sco) == "X.U.FEFF.Authors"] <- "Authors"

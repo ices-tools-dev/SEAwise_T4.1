@@ -24,7 +24,7 @@ library(ggplot2)
 library(splitstackshape)
 library(patchwork)
 
-outPath                               <- "Systematic Reviews/Analysis Task 4.1/Routput/"
+outPath                               <- "Routput/"
 
 #-----------------------------------------------#
 # Read in data
