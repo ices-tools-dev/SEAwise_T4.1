@@ -131,6 +131,20 @@ write.csv(nrPaps, paste0(outPath,"nr papers per year.csv"), row.names = FALSE)
 
 
 #-----------------------------------------------#
+## Table of number of papers by region ----
+#-----------------------------------------------#
+
+nrPaps                               <- aggregate(SW.ID ~ Region, data, function(x) length(unique(x)))
+nrPaps                               <- nrPaps[order(nrPaps$SW.ID, decreasing = TRUE),]
+nrPaps$Prop                          <- round(nrPaps$SW.ID / length(unique(data$SW.ID)),3)
+nrPaps$Perc                          <- nrPaps$Prop * 100
+nrPaps
+
+write.csv(nrPaps, paste0(outPath,"nr papers region.csv"), row.names = FALSE)
+
+
+
+#-----------------------------------------------#
 ## Table of number of papers by ecosystem component ----
 #-----------------------------------------------#
 
@@ -741,18 +755,6 @@ ggsave("MethodsRes.png", p, path=outPath, width = 10, height = 5)
 #-----------------------------------------------#
 
 #-----------------------------------------------#
-## Table with number and proportion of papers by region -----
-#-----------------------------------------------#
-
-Regions                               <- data[, .(NrPaps = length(unique(SW.ID))), by = "Region"]   
-Regions$Prop                          <- Regions$NrPaps / sum(Regions$NrPaps)
-
-sum(Regions$NrPaps) #higher than number of unique papers in data, so some papers cover multiple regions
-
-write.csv(Regions, paste0(outPath,"nr and prop papers region.csv"), row.names = FALSE)
-
-
-#-----------------------------------------------#
 ## Barplot with number of papers by region -----
 #-----------------------------------------------#
 
@@ -1262,7 +1264,7 @@ sankey <- ggplot(sankeyInput,
 sankey
 
 ## Save sankey
-ggsave("Sankey.tiff", sankey, path=outPath,
+ggsave("Sankey.png", sankey, path=outPath,
        width = 400,
        height = 200,
        units = "mm")
@@ -1686,7 +1688,7 @@ p <- ggplot(tempLitTr, aes(x, id = SW.ID, split = y, value = value)) +
   geom_parallel_sets_axes(axis.width = 0.1, fill = "gray90") +
   geom_parallel_sets_labels(colour = 'black', angle = 0, size = 2.8) +
   scale_x_continuous(breaks = c(2:5),
-                     labels = c("Ecosystem\ncomponent","Sampling\nMethodology","Response\nmeasured","Analytic\nmethod"),
+                     labels = c("Ecosystem component","Sampling methodology","Response measured","Analytic method"),
                      expand = c(0.06,0.05)) +
   scale_fill_viridis_d(direction = -1) +
   theme_bw() +
@@ -1887,8 +1889,8 @@ ggsave(filename = paste0(outPath, "litter_spatialResVExt.png"),
                                           name="No. of\narticles") +
          scale_x_discrete(drop = FALSE) +
          scale_y_discrete(drop = FALSE) +
-         ylab("Spatial Sampling Resolution (m)") +
-         xlab("Spatial Sampling Extent (m)") +
+         ylab("Spatial sampling resolution (m)") +
+         xlab("Spatial sampling scale (m)") +
          theme_few() +
          theme(text = element_text(size = 9), 
                # axis.text.x = element_text(hjust = 0.5, vjust = 1),
@@ -1952,8 +1954,8 @@ ggsave(filename = paste0(outPath, "litter_temporalResVExt.png"),
                                           n.breaks=3) +
          scale_x_discrete(drop = FALSE) +
          scale_y_discrete(drop = FALSE) +
-         ylab("Temporal Sampling Resolution") +
-         xlab("Temporal Sampling Extent") +
+         ylab("Temporal sampling resolution") +
+         xlab("Temporal sampling scale") +
          theme_few() +
          theme(text = element_text(size = 9), 
                # axis.text.x = element_text(hjust = 0.5, vjust = 1),
@@ -2010,8 +2012,8 @@ ggsave(filename = paste0(outPath, "litter_spatiotemporalExt.png"),
                                           n.breaks = 3) +
          scale_x_discrete(drop = FALSE) +
          scale_y_discrete(drop = FALSE) +
-         ylab("Temporal Extent") +
-         xlab("Spatial Extent (m)") +
+         ylab("Temporal scale") +
+         xlab("Spatial scale (m)") +
          theme_few() +
          theme(text = element_text(size = 9), 
                # axis.text.x = element_text(hjust = 0.5, vjust = 1),
@@ -2064,8 +2066,8 @@ ggsave(filename = paste0(outPath, "litter_spatiotemporalRes.png"),
                                           name="No. of\narticles") +
          scale_x_discrete(drop = FALSE) +
          scale_y_discrete(drop = FALSE) +
-         ylab("Temporal Resolution") +
-         xlab("Spatial Resolution (m)") +
+         ylab("Temporal resolution") +
+         xlab("Spatial resolution (m)") +
          theme_few() +
          theme(text = element_text(size = 9), 
                # axis.text.x = element_text(hjust = 0.5, vjust = 1),
@@ -2086,8 +2088,8 @@ pSpatial <- ggplot() +
                                    name="No. of\npapers") +
   scale_x_discrete(drop = FALSE) +
   scale_y_discrete(drop = FALSE) +
-  ylab("Spatial Sampling Resolution (m)") +
-  xlab("Spatial Sampling Extent (m)") +
+  ylab("Spatial sampling eesolution (m)") +
+  xlab("Spatial sampling scale (m)") +
   theme_few() +
   theme(text = element_text(size = 9), 
         # axis.text.x = element_text(hjust = 0.5, vjust = 1),
@@ -2106,8 +2108,8 @@ pTemporal <- ggplot() +
                                    n.breaks=3) +
   scale_x_discrete(drop = FALSE) +
   scale_y_discrete(drop = FALSE) +
-  ylab("Temporal Sampling Resolution") +
-  xlab("Temporal Sampling Extent") +
+  ylab("Temporal sampling resolution") +
+  xlab("Temporal sampling scale") +
   theme_few() +
   theme(text = element_text(size = 9), 
         # axis.text.x = element_text(hjust = 0.5, vjust = 1),
@@ -2198,6 +2200,9 @@ ggsave(plot = p,
 # Set path
 outPathPET                           <- "Routput/Manuscript/bycatch case study/"
 
+# Load dataset immediately - skipping two sets of code below -> go to 'Basic numbers' directly
+# subset_PET                           <- readRDS(paste0(outPathPET,"bycatch case study dataset.RDS"))
+
 
 #-----------------------------------------------#
 ## Load and process PET species list ----
@@ -2224,7 +2229,7 @@ if(!file.exists(paste0("PET species/",fileName))){
   }
   write.csv(tax, paste0("PET species/",fileName))
 } else {
-  tax                                 <- read.csv(paste0(PET species/",fileName))
+  tax                                 <- read.csv(paste0("PET species/",fileName))
 }
 
 # Add valid names to the PET list
@@ -2320,16 +2325,16 @@ length(unique(subset_byc$ID.tax))
 
 # Split rows in case of multiple species/taxa
 subset_byc_split                    <- cSplit(subset_byc, "Species.taxonomic.group.s.", " _ ", "long")
-length(unique((subset_byc_split$SW.ID))) #114
-length(unique((subset_byc_split$ID.tax))) #153
+length(unique((subset_byc_split$SW.ID))) #113
+length(unique((subset_byc_split$ID.tax))) #152
 subset_byc_not_split                <- subset_byc[!subset_byc$ID.tax %in% subset_byc_split$ID.tax,]
 length(unique((subset_byc_not_split$SW.ID))) #35
 length(unique((subset_byc_not_split$ID.tax))) #35
 subset_byc                          <- rbind(subset_byc_split, subset_byc_not_split)
 subset_byc                          <- subset_byc[order(subset_byc$SW.ID),]
 subset_byc$Species.taxonomic.group.s.[subset_byc$Species.taxonomic.group.s. %in% ""] <- NA
-length(unique(subset_byc$SW.ID)) #139
-length(unique(subset_byc$ID.tax)) #188
+length(unique(subset_byc$SW.ID)) #138
+length(unique(subset_byc$ID.tax)) #187
 
 # Create combination of species and region column
 subset_byc$SpeciesRegion            <- paste(subset_byc$Species.taxonomic.group.s., subset_byc$Region)
@@ -2421,15 +2426,15 @@ specRegNotListed
 # [9] "Oxynotus centrina Mediterranean Sea" - not on list (but other species of same genus is)
 # [10] "Raja asterias Mediterranean Sea" - not on list   
 # [12] "Raja radula Mediterranean Sea" - not on list
-# [15] "Scyliorhinus canicula Mediterranean Sea" - only in Baltic Sea
-# [16] "Scyliorhinus canicula Western Waters" - only in Baltic Sea     
-# [17] "Scyliorhinus stellaris Mediterranean Sea" - not on list
-# [18] "Scyliorhinus stellaris Western Waters" - not on list
-# [19] "Squalus blainville Mediterranean Sea" 
-# [20] "Squalus Mediterranean Sea" - not on list
-# [21] "Tetronarce nobiliana Mediterranean Sea" - not on list
-# [22] "Torpedo marmorata Mediterranean Sea" - only in Baltic Sea    
-# [23] "Torpedo torpedo Mediterranean Sea" - not on list    
+# [16] "Scyliorhinus canicula Mediterranean Sea" - only in Baltic Sea
+# [17] "Scyliorhinus canicula Western Waters" - only in Baltic Sea     
+# [18] "Scyliorhinus stellaris Mediterranean Sea" - not on list
+# [19] "Scyliorhinus stellaris Western Waters" - not on list
+# [20] "Squalus blainville Mediterranean Sea" - not on list
+# [21] "Squalus Mediterranean Sea" - not on list
+# [22] "Tetronarce nobiliana Mediterranean Sea" - not on list
+# [23] "Torpedo marmorata Mediterranean Sea" - only in Baltic Sea    
+# [24] "Torpedo torpedo Mediterranean Sea" - not on list    
 
 ## On list so should be included
 # [4] "Elasmobranchii North Sea" - no specific species from this area on the list, but likely entails species that are listed under 'All oceans'                 
@@ -2438,6 +2443,7 @@ specRegNotListed
 # [11] "Raja North Sea" - only genus, but species are on the list
 # [13] "Raja Western Waters" - only genus, but species are on the list
 # [14] "Rajidae North Sea" - only family, but species are on the list
+# [15] "Rajidae Western Waters" - only family but species are on the list
 # [20] "Squalus Mediterranean Sea" - only genus, but species are on the list
 
 # Double-check species list with IUCN
@@ -2461,7 +2467,12 @@ specRegNotListed
 # [22] "Torpedo marmorata Mediterranean Sea" - LC in Med   
 # [23] "Torpedo torpedo Mediterranean Sea" - LC in Europe                       
 
-specRegNotListedDrop                 <- specRegNotListed[c(6,15,16,21,22,23)]
+specRegNotListedDrop                 <- specRegNotListed[specRegNotListed %in% c("Leucoraja naevus Western Waters",
+                                                           "Scyliorhinus canicula Mediterranean Sea",
+                                                           "Scyliorhinus canicula Western Waters",
+                                                           "Tetronarce nobiliana Mediterranean Sea",
+                                                           "Torpedo marmorata Mediterranean Sea",
+                                                           "Torpedo torpedo Mediterranean Sea")]
 idx                                  <- match(specRegNotListedDrop, specReg)
 specRegKeep                          <- specReg[-idx]
 cart_keep                            <- subset(cart, SpeciesRegion %in% specRegKeep)
@@ -2496,7 +2507,7 @@ specRegListed                       <- c(specRegListed,
                                          "Sebastes Barents Sea")
 
 # Check rows without species/taxon
-nrow(fish[is.na(fish$Species.taxonomic.group.s.),]) #quite some - 42
+nrow(fish[is.na(fish$Species.taxonomic.group.s.),]) #quite some - 43
 length(unique(fish$SW.ID[is.na(fish$Species.taxonomic.group.s.)])) #from 21 papers
 unique(fish$SW.ID[is.na(fish$Species.taxonomic.group.s.)])
 #"SW4_0109" - includes Hippocampus hippocampus as non-target which is not on PET list but considered as NT by IUCN, so keep
@@ -2608,8 +2619,7 @@ subset_PET$Response.variable_category   <- with(subset_PET, ifelse(Response.vari
 table(subset_PET$Response.variable_category, subset_PET$Direction.of.relationship)
 
 # Check final number of papers
-length(unique(subset_PET$SW.ID)) #122 papers
-table(subset_PET$Ecosystem.component_level1)
+length(unique(subset_PET$SW.ID)) #121 papers
 
 
 ### Check number of citations per paper ----
@@ -2722,11 +2732,6 @@ Gears                                <- subset_PET[,.(NrPaps = length(unique(SW.
                                                    by = c("Fishery.type", "Gear_level1")]
 Gears
 
-# Check fisheries type only
-Gears                                <- subset_PET[,.(NrPaps = length(unique(SW.ID))),
-                                                   by = c("Fishery.type")]
-Gears
-
 # Check gears by region
 Gears                                <- subset_PET[,.(NrPaps = length(unique(SW.ID))),
                                                    by = c("Gear_level1","Region")]
@@ -2742,19 +2747,19 @@ Gears
 #-----------------------------------------------#
 ### Methods ----
 #-----------------------------------------------#
-unique(subset_PET$Sampling.Method.used.for.data.collection)
-table(subset_PET$Sampling.Method.used.for.data.collection)
-table(subset_PET$Analytical.method.used.for.inference)
-table(subset_PET$Study.type)
 
 Methods                              <- subset_PET[, .(NrPaps = length(unique(SW.ID))),
                                                  by = c("Sampling.Method.used.for.data.collection")]
 Methods
-sum(Methods$NrPaps) #135, so more than the 122 unique papers, meaning that several studies used multiple sampling methods
+sum(Methods$NrPaps) #135, so more than the 121 unique papers, meaning that several studies used multiple sampling methods
 
 # Check exactly how many papers have more than one study type
 MethNrPap                         <- aggregate(Sampling.Method.used.for.data.collection ~ SW.ID, subset_PET, function(x) length(unique(x)))
 nrow(MethNrPap[MethNrPap$Sampling.Method.used.for.data.collection > 1,]) #12 papers with more than one method
+
+# Check number of unique papers using surveys
+length(unique(subset_PET$SW.ID[subset_PET$Sampling.Method.used.for.data.collection %in% 
+                                 c("Regular Fisheries Independent Survey","Irregular Fisheries Independent Survey")]))
 
 
 #-----------------------------------------------#
@@ -2787,7 +2792,7 @@ Region
 Study                              <- subset_PET[, .(NrPaps = length(unique(SW.ID))),
                                                   by = c("Study.type")]
 Study
-sum(Study$NrPaps) #127, so a bit more than the 122 unique papers, meaning that a few studies have multiple study types
+sum(Study$NrPaps) #127, so a bit more than the 121 unique papers, meaning that a few studies have multiple study types
 
 # Check exactly how many papers have more than one study type
 StudyNrPap                         <- aggregate(Study.type ~ SW.ID, subset_PET, function(x) length(unique(x)))
@@ -2801,7 +2806,7 @@ StudyNrPap[order(StudyNrPap$Study.type),] #five papers with two study types
 Pressure                           <- subset_PET[, .(NrPaps = length(unique(SW.ID))),
                                                  by = c("Pressure.variable_category")]
 Pressure
-sum(Pressure$NrPaps) #131, so a few more than the 122 unique papers, meaning that a few studies have multiple study types
+sum(Pressure$NrPaps) #131, so a few more than the 121 unique papers, meaning that a few studies have multiple study types
 
 # Check exactly how many papers 
 PressNrPap                         <- aggregate(Pressure.variable_category ~ SW.ID, subset_PET, function(x) length(unique(x)))
@@ -2816,7 +2821,7 @@ nrow(PressNrPap[PressNrPap$Pressure.variable_category > 1,]) #8 papers with more
 Response                           <- subset_PET[, .(NrPaps = length(unique(SW.ID))),
                                                  by = c("Response.variable_category")]
 Response
-sum(Response$NrPaps) #142, so more than the 122 unique papers, meaning that a few studies have multiple response variables
+sum(Response$NrPaps) #142, so more than the 121 unique papers, meaning that a few studies have multiple response variables
 
 # Check exactly how many papers
 RespNrPap                         <- aggregate(Response.variable_category ~ SW.ID, subset_PET, function(x) length(unique(x)))
@@ -2831,7 +2836,7 @@ nrow(RespNrPap[RespNrPap$Response.variable_category > 1,]) #16 papers with more 
 Direction                            <- subset_PET[, .(NrPaps = length(unique(SW.ID))),
                                                  by = c("Direction.of.relationship")]
 Direction
-sum(Direction$NrPaps) #151, so more than the 122 unique papers, meaning that a few studies have multiple study types
+sum(Direction$NrPaps) #151, so more than the 121 unique papers, meaning that a few studies have multiple study types
 
 # Check exactly how many papers
 DirNrPap                             <- aggregate(Direction.of.relationship ~ SW.ID, subset_PET, function(x) length(unique(x)))
@@ -2844,6 +2849,28 @@ DirPress                             <- subset_PET[, .(NrPaps = length(unique(SW
 DirPress                             <- DirPress[order(DirPress$NrPaps, decreasing = TRUE),]
 DirPress                             <- DirPress[order(DirPress$Pressure.variable_category),]
 DirPress
+
+
+
+#-----------------------------------------------#
+### Pressure-response relationship ----
+#-----------------------------------------------#
+
+# Bycatch - Mortality
+length(unique(subset_PET$SW.ID[subset_PET$Pressure.variable_category %in% "Bycatch" & 
+                                 subset_PET$Response.variable_category %in% "Mortality"])) #19
+
+# Bycatch - Abundance
+length(unique(subset_PET$SW.ID[subset_PET$Pressure.variable_category %in% "Bycatch" & 
+                                 subset_PET$Response.variable_category %in% "Abundance/biomass/density"])) #17
+
+# Fishing effort - Mortality
+length(unique(subset_PET$SW.ID[subset_PET$Pressure.variable_category %in% "Fishing effort" & 
+                                 subset_PET$Response.variable_category %in% "Mortality"])) #22
+
+# Fishing effort - Abundance
+length(unique(subset_PET$SW.ID[subset_PET$Pressure.variable_category %in% "Fishing effort" & 
+                                 subset_PET$Response.variable_category %in% "Abundance/biomass/density"])) #19
 
 
 
@@ -3544,7 +3571,7 @@ unique(datNegByc$SW.ID)
 # Positive
 datPos                  <- subset(subset_PET, Direction.of.relationship %in% "Positive")
 table(datPos$Pressure.variable_category, datPos$Response.variable_category)
-#Check further Bycatch - Biodiversity, as that seems strange to be a positive relationship
+#Check further Bycatch - Biodiversity and Fishing effort - Abundance, as that seems strange to be a positive relationship
 
 ## sw4_1332
 # At the end of the fishing season, some biodiversity metrics of the discard fraction decrease, whereas
@@ -3554,6 +3581,12 @@ table(datPos$Pressure.variable_category, datPos$Response.variable_category)
 # concern the actual fish community - only the discard fraction. Keep it though as it is to not deviate
 # from the protocol, but that it concerns the biodiversity of the discarded fraction in the response 
 # variable of the paper. Changed in Step 5 of the data processing scripts.
+
+## SW4_1841
+# Looked at trends of Amblyraja radiata and beam trawl effort where this is a discard species in the North Sea
+# from 1970-1993. Both this species and effort show an increasing trend over time and the two variables are
+# positively correlated. The authors say that their statistical analysis is not sufficient to disentangle
+# any causal relationships, and this is described in the Magnitude of relationship columns. So leave as is.
 
 # Negative
 datNeg                  <- subset(subset_PET, Pressure.variable_category %in% c("Closure","Bycatch reduction & selectivity") &
@@ -3732,7 +3765,7 @@ p <- ggplot(datTr, aes(x, id = SW.ID, split = y, value = value)) +
   geom_parallel_sets_axes(axis.width = 0.1, fill = "gray90") +
   geom_parallel_sets_labels(colour = 'black', angle = 0, size=3.1) +
   scale_x_continuous(breaks = c(2:4),
-                     labels = c("Pressure","Direction\nof relationship","Response\nmeasured"),
+                     labels = c("Pressure","Direction of relationship","Response measured"),
                      expand = c(0.12, 0.05)) +
   scale_fill_viridis_d() +
   theme_bw() +
@@ -4100,8 +4133,8 @@ ggsave(filename = paste0(outPathPET, "spatialResVExt.png"),
                                           name="No. of\narticles") +
          scale_x_discrete(drop = FALSE) +
          scale_y_discrete(drop = FALSE) +
-         ylab("Spatial Sampling Resolution (m)") +
-         xlab("Spatial Sampling Extent (m)") +
+         ylab("Spatial sampling Resolution (m)") +
+         xlab("Spatial sampling scale (m)") +
          theme_few() +
          theme(text = element_text(size = 9), 
                # axis.text.x = element_text(hjust = 0.5, vjust = 1),
@@ -4165,8 +4198,8 @@ ggsave(filename = paste0(outPathPET, "temporalResVExt.png"),
                                           n.breaks = 6) +
          scale_x_discrete(drop = FALSE) +
          scale_y_discrete(drop = FALSE) +
-         ylab("Temporal Sampling Resolution") +
-         xlab("Temporal Sampling Extent") +
+         ylab("Temporal sampling resolution") +
+         xlab("Temporal sampling scale") +
          theme_few() +
          theme(text = element_text(size = 9), 
                # axis.text.x = element_text(hjust = 0.5, vjust = 1),
@@ -4221,8 +4254,8 @@ ggsave(filename = paste0(outPathPET, "spatiotemporalExt.png"),
                                           name="No. of\narticles") +
          scale_x_discrete(drop = FALSE) +
          scale_y_discrete(drop = FALSE) +
-         ylab("Temporal Sampling Extent") +
-         xlab("Spatial Sampling Extent (m)") +
+         ylab("Temporal sampling scale") +
+         xlab("Spatial sampling scale (m)") +
          theme_few() +
          theme(text = element_text(size = 9), 
                # axis.text.x = element_text(hjust = 0.5, vjust = 1),
@@ -4276,8 +4309,8 @@ ggsave(filename = paste0(outPathPET, "spatiotemporalRes.png"),
                                           n.breaks = 6) +
          scale_x_discrete(drop = FALSE) +
          scale_y_discrete(drop = FALSE) +
-         ylab("Temporal Sampling Resolution") +
-         xlab("Spatial Sampling Resolution (m)") +
+         ylab("Temporal sampling resolution") +
+         xlab("Spatial sampling resolution (m)") +
          theme_few() +
          theme(text = element_text(size = 9), 
                # axis.text.x = element_text(hjust = 0.5, vjust = 1),
@@ -4300,8 +4333,8 @@ pSpatial <- ggplot() +
                                    n.breaks = 8) +
   scale_x_discrete(drop = FALSE) +
   scale_y_discrete(drop = FALSE) +
-  ylab("Spatial Sampling Resolution (m)") +
-  xlab("Spatial Sampling Extent (m)") +
+  ylab("Spatial sampling resolution (m)") +
+  xlab("Spatial sampling scale (m)") +
   theme_few() +
   theme(text = element_text(size = 9), 
         # axis.text.x = element_text(hjust = 0.5, vjust = 1),
@@ -4320,8 +4353,8 @@ pTemporal <- ggplot() +
                                    n.breaks=6) +
   scale_x_discrete(drop = FALSE) +
   scale_y_discrete(drop = FALSE) +
-  ylab("Temporal Sampling Resolution") +
-  xlab("Temporal Sampling Extent") +
+  ylab("Temporal sampling resolution") +
+  xlab("Temporal sampling scale") +
   theme_few() +
   theme(text = element_text(size = 9), 
         # axis.text.x = element_text(hjust = 0.5, vjust = 1),

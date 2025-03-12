@@ -325,7 +325,7 @@ table(is.na(data$Ecosystem.component_level1)) #no NAs
 
 ## Check the ecosystem component level 2
 table(is.na(subset(data, Ecosystem.component_level1 %in% c("Fish_teleost", "Benthos", "Marine_mammals", "Fish_cartilaginous", #only for those with level 2 as option
-                                                           "Physical_habitats", "Plankton", "Plants", "Reptiles"))$Ecosystem.component_level2)) #331 NAs
+                                                           "Physical_habitats", "Plankton", "Plants", "Reptiles"))$Ecosystem.component_level2)) #330 NAs
 table(is.na(data$Ecosystem.component_level2)) #across all
 
 # If level 2 not provided but option was given, mark as 'Not specified
@@ -429,7 +429,7 @@ for(iPap in 1:length(papersBoth)){
 identical(papSedBoth$sedBenthos, papSedBoth$sedPhysicalHab) #yes, so no further action needed
 
 ## Check ecosystem component level 3 - only for benthos and marine mammals
-table(is.na(subset(data, Ecosystem.component_level1 %in% c("Benthos","Marine_mammals"))$Ecosystem.component_level3)) #395 NAs
+table(is.na(subset(data, Ecosystem.component_level1 %in% c("Benthos","Marine_mammals"))$Ecosystem.component_level3)) #394 NAs
 table(is.na(data$Ecosystem.component_level3)) #across all
 
 # If level 3 not provided for Benthos or Marine mammals -> Cetaceans, mark as 'Not specified'
@@ -473,7 +473,7 @@ table(data$Ecosystem.component_benthos_sediment, useNA = "always") #correct spel
 data$Ecosystem.component_benthos_sediment <- ifelse(data$Ecosystem.component_benthos_sediment == "sand", "Sand", data$Ecosystem.component_benthos_sediment)
 
 ## Check what species are commonly mentioned
-length(unique(data$Species.taxonomic.group.s.)) # 469 unique input... Let's try to group/categorize these in a separate script (step 3)
+length(unique(data$Species.taxonomic.group.s.)) # 470 unique input... Let's try to group/categorize these in a separate script (step 3)
 
 ## fix some rows with double input
 a                                    <- data[Species.taxonomic.group.s. == "asteroids and lamp shells",,]
@@ -515,7 +515,7 @@ data$Pressure_variable    <- with(data,ifelse(grepl("Exposure to electical pulse
                                               "Exposure to electrical pulse", Pressure_variable))
 
 ## Check other pressures
-table(is.na(data$Pressure_other)) #1208 NAs, but this is fine - only when pressures other than fishing were studied
+table(is.na(data$Pressure_other)) #1212 NAs, but this is fine - only when pressures other than fishing were studied
 sort(unique(data$Pressure_other))
 
 
@@ -528,13 +528,13 @@ table(data$Fishery.type, useNA = "always") # all fine, but Artisanal was not an 
 data$Fishery.type                    <- ifelse(data$Fishery.type %in% "Artisanal", "Commercial", 
                                                ifelse(data$SW.ID == "SW4_1000", "Commercial", data$Fishery.type))
 
-table(data$Gear_level1, useNA = "always") #221 NAs, some misspellings
+table(data$Gear_level1, useNA = "always") #219 NAs, some misspellings
 data$Gear_level1                     <- ifelse(data$Gear_level1 == "Demersal trawls", "Demersal_trawls",
                                                ifelse(data$Gear_level1 %in% c("Pelagic _trawls", "Pelagic trawls"), "Pelagic_trawls",
                                                       ifelse(data$Gear_level1 == "Mixed gears", "Not specified",  data$Gear_level1)))
 
 # Check how many papers with NA for gear level 1 - change to 'Not specified'
-length(unique(data$SW.ID[is.na(data$Gear_level1)])) #77 papers, likely because gear was unknown or record represents multiple gear types
+length(unique(data$SW.ID[is.na(data$Gear_level1)])) #76 papers, likely because gear was unknown or record represents multiple gear types
 data$Gear_level1[is.na(data$Gear_level1)]   <- "Not specified"
 
 # Check the 'Other' category in Gear_level1 and change manually where needed
@@ -615,7 +615,7 @@ data$Gear_level2[is.na(data$Gear_level2) & data$Gear_level1 %in% c("Demersal_tra
 
 ## Check the Response variable category
 table(is.na(data$Response.variable_category)) #no NAs
-table(data$Response.variable_category) #soem misspellings
+table(data$Response.variable_category) #some misspellings
 
 data$Response.variable_category       <- ifelse(data$Response.variable_category %in% c("abundance", "Abundance", "Abundance by taxon"), "Abundance/biomass/density",
                                                 ifelse(data$Response.variable_category %in% c("other"), "Other",

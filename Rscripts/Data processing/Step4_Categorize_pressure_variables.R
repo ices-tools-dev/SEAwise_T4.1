@@ -851,6 +851,9 @@ datPressvar$Pressure.variable_category    <- with(datPressvar, ifelse(Pressure_v
 datPressvar$Pressure.variable_category    <- with(datPressvar, ifelse(Pressure_variable %in% "Fishing effort" & SW.ID %in% "SW4_1086", 
                                                                       "Closure",Pressure.variable_category))
 
+datPressvar$Pressure.variable_category    <- with(datPressvar, ifelse(Pressure_variable %in% "anti-trawling reefs" & SW.ID %in% "SW4_1100", 
+                                                                      "Closure",Pressure.variable_category))
+
 PV_closure                         <- subset(datPressvar, Pressure.variable_category %in% "Closure")
 
 
@@ -907,6 +910,14 @@ datPressvar                               <- subset(datPressvar, !(SW.ID %in% "S
 
 ## Change reported response variable for this paper and add row below on Gear comparison
 datPressvar$Pressure_variable[datPressvar$SW.ID %in% "SW4_1991"]  <- "increase in mesh size"
+
+##This paper should also go under Gear comparison. Therefore change also the reported pressure variable to indicate the gear comparison and testing of BRD.
+datPressvar$Pressure.variable_category    <- with(datPressvar,ifelse(Pressure_variable %in% "fishing hours" & SW.ID %in% "SW4_0303",
+                                                                     "Bycatch reduction & selectivity",Pressure.variable_category))
+datPressvar$Pressure_variable    <- with(datPressvar,ifelse(Pressure_variable %in% "fishing hours" & SW.ID %in% "SW4_0303",
+                                                                     "comparison of high contrast panels and net lights with standard nets",
+                                                            Pressure_variable))
+
 
 PV_bycatchRedSel                         <- subset(datPressvar, Pressure.variable_category %in% "Bycatch reduction & selectivity")
 
@@ -1039,6 +1050,11 @@ rm(SW4_1320)
 SW4_1991                              <- subset(datPressvar, SW.ID %in% "SW4_1991")
 SW4_1991$Pressure.variable_category   <- "Gear comparison"
 datPressvar                           <- rbind(datPressvar, SW4_1991)
+
+# SW4_0303 already under Bycatch reduction & selectivity, but add also to Gear comparison
+SW4_0303                              <- subset(datPressvar, SW.ID %in% "SW4_0303")
+SW4_0303$Pressure.variable_category   <- "Gear comparison"
+datPressvar                           <- rbind(datPressvar, SW4_0303)
 
 PV_gear                        <- subset(datPressvar, Pressure.variable_category %in% "Gear comparison")
 

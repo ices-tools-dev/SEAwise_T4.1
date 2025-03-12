@@ -1,11 +1,364 @@
-"Gear_level1","SW.ID","Prop","Perc"
-"Demersal_trawls",328,0.622,62.2
-"Nets",83,0.157,15.7
-"Not specified",80,0.152,15.2
-"Hooks_and_lines",50,0.095,9.5
-"Seines",32,0.061,6.1
-"Dredges",31,0.059,5.9
-"Pelagic_trawls",21,0.04,4
-"Pots",14,0.027,2.7
-"Spearfishing",5,0.009,0.9
-"Other",4,0.008,0.8
+"Species.taxonomic.group.s.","SW.ID","Prop","Perc"
+"",226,0.429,42.9
+"Caretta caretta",18,0.034,3.4
+"Gadus morhua",14,0.027,2.7
+"Tursiops truncatus",12,0.023,2.3
+"Merluccius merluccius",10,0.019,1.9
+"Nephrops norvegicus",10,0.019,1.9
+"Delphinus delphis",9,0.017,1.7
+"Phocoena phocoena",9,0.017,1.7
+"Pleuronectes platessa",8,0.015,1.5
+"Scyliorhinus canicula",6,0.011,1.1
+"Calonectris diomedea",5,0.009,0.9
+"Larus audouinii",5,0.009,0.9
+"Mollusca",5,0.009,0.9
+"Mullus barbatus",5,0.009,0.9
+"Raja clavata",5,0.009,0.9
+"Solea solea",5,0.009,0.9
+"Crustacea",4,0.008,0.8
+"Galeus melastomus",4,0.008,0.8
+"Isidella elongata",4,0.008,0.8
+"Limanda limanda",4,0.008,0.8
+"Merlangius merlangus",4,0.008,0.8
+"Mollusca _ Crustacea _ Echinodermata _ Polychaeta",4,0.008,0.8
+"Nematoda",4,0.008,0.8
+"Clupea harengus",3,0.006,0.6
+"Engraulis encrasicolus _ Sardina pilchardus",3,0.006,0.6
+"Halichoerus grypus",3,0.006,0.6
+"Larus fuscus",3,0.006,0.6
+"Octopus vulgaris",3,0.006,0.6
+"Pleuronectes platessa _ Solea solea",3,0.006,0.6
+"Polybius depurator",3,0.006,0.6
+"Sepia officinalis",3,0.006,0.6
+"Chamelea gallina",2,0.004,0.4
+"Clangula hyemalis _ Melanitta fusca",2,0.004,0.4
+"Coris julis",2,0.004,0.4
+"Diplodus annularis",2,0.004,0.4
+"Elasmobranchii",2,0.004,0.4
+"Eledone cirrhosa",2,0.004,0.4
+"Etmopterus spinax",2,0.004,0.4
+"Funiculina quadrangularis",2,0.004,0.4
+"Gracilechinus acutus",2,0.004,0.4
+"Lepidorhombus whiffiagonis",2,0.004,0.4
+"Monachus monachus",2,0.004,0.4
+"Mullus",2,0.004,0.4
+"Nephrops",2,0.004,0.4
+"Parapenaeus longirostris",2,0.004,0.4
+"Pecten maximus",2,0.004,0.4
+"Phalacrocorax aristotelis",2,0.004,0.4
+"Phocoena phocoena _ Delphinus delphis",2,0.004,0.4
+"Phycis blennoides",2,0.004,0.4
+"Raja",2,0.004,0.4
+"Raja clavata _ Raja montagui _ Leucoraja naevus",2,0.004,0.4
+"Scomber scombrus",2,0.004,0.4
+"Serranus scriba",2,0.004,0.4
+"Squalus acanthias",2,0.004,0.4
+"Stenella coeruleoalba",2,0.004,0.4
+"Teleostei",2,0.004,0.4
+"Actinopterygii",1,0.002,0.2
+"Aequipecten opercularis",1,0.002,0.2
+"Agonus cataphractus _ Myoxocephalus scorpius",1,0.002,0.2
+"Amblyraja radiata",1,0.002,0.2
+"Ammodytes marinus _ Ammodytes tobianus",1,0.002,0.2
+"Anarhichas lupus",1,0.002,0.2
+"Anatidae _ Mergus _ Podiceps _ Phalacrocorax carbo _ Fulica atra _ Alcidae _ Larus marinus",1,0.002,0.2
+"Aphrodita",1,0.002,0.2
+"Arctica islandica",1,0.002,0.2
+"Arenicola",1,0.002,0.2
+"Argentina sphyraena _ Arnoglossus laterna _ Arnoglossus thori _ Chelidonichthys cuculus _ Capros aper _ Cepola macrophthalma _ Citharus linguatula _ Conger conger _ Eutrigla gurnardus _ Gadiculus argenteus _ Gaidropsarus mediterraneus _ Galeus melastomus _ Gobiidae _ Gobius niger _ Lepidorhombus boscii _ Lepidotrigla cavillone _ Lophius budegassa _ Maurolicus muelleri _ Merluccius merluccius _ Microchirus variegatus _ Micromesistius poutassou _ Mullus barbatus _ Nephrops norvegicus _ Scyliorhinus canicula _ Serranus hepatus _ Solea solea _ Symphurus ligulatus _ Torpedo marmorata _ Trachurus mediterraneus _ Trachurus trachurus _ Chelidonichthys lucerna _ Trigla lyra _ Chelidonichthys lastoviza _ Trisopterus capelanus _ Zeus faber",1,0.002,0.2
+"Aristaeomorpha foliacea _ Aristeus antennatus",1,0.002,0.2
+"Aristaeomorpha foliacea _ Plesionika martia _ Nephrops norvegicus",1,0.002,0.2
+"Aristeus antennatus",1,0.002,0.2
+"Aristeus antennatus _ Aristaeomorpha foliacea",1,0.002,0.2
+"Aristeus antennatus _ Parapenaeus longirostris _ Aristaeomorpha foliacea",1,0.002,0.2
+"Arnoglossus laterna",1,0.002,0.2
+"Arnoglossus laterna _ Limanda limanda _ Pleuronectes platessa _ Platichthys flesus _ Glyptocephalus cynoglossus _ Buglossidium luteum",1,0.002,0.2
+"Asconema setubalense",1,0.002,0.2
+"Asterias rubens",1,0.002,0.2
+"Asterias rubens _ Aphrodita aculeata _ Pagurus _ Buccinum undatum",1,0.002,0.2
+"Asterias rubens _ Astropecten irregularis",1,0.002,0.2
+"Asterias rubens _ Ophiuroidea _ Mytilus edulis _ Sepiolina _ Actiniaria",1,0.002,0.2
+"Asterias rubens _ Ophiuroidea _ Pagurus bernhardus _ Polybius holsatus _ Buccinum undatum",1,0.002,0.2
+"Asteroidea",1,0.002,0.2
+"Asteroidea _ Bivalvia _ Cnidaria _ Crustacea _ Echinoidea _ Prosobranchia",1,0.002,0.2
+"Asteroidea _ Gastropoda _ Malacostraca _ Echinoidea",1,0.002,0.2
+"Astropecten irregularis",1,0.002,0.2
+"Atherina boyeri _ Sepia officinalis _ Mullus barbatus _ Solea solea _ Scophthalmus rhombus _ Scophthalmus maximus _ Squilla mantis",1,0.002,0.2
+"Aythya marila",1,0.002,0.2
+"Bathypolypus _ Rossia moelleri _ Rossia palpebrosa _ Bathypolypus arcticus",1,0.002,0.2
+"Bivalvia",1,0.002,0.2
+"Bivalvia _ Cephalopoda _ Malacostraca",1,0.002,0.2
+"Bivalvia _ Cirripedia",1,0.002,0.2
+"Bivalvia _ Crustacea _ Ascidia _ Spongia _ Cnidaria _ Echinodermata _ Gastropoda _ Astropecten _ Bolinus brandaris _ Citharus linguatula _ Alpheus glaber _ Medorippe lanata _ Goneplax rhomboides _ Alcyonium palmatum _ Spongia (Spongia) officinalis _ Polybius depurator _ Ophioderma longicaudum",1,0.002,0.2
+"Bolinus brandaris _ Pecten jacobaeus _ Aequipecten opercularis",1,0.002,0.2
+"Boops boops _ Trachurus _ Pagellus",1,0.002,0.2
+"Brachiopoda",1,0.002,0.2
+"Brachyura _ Echinoidea _ Asteroidea _ Actiniaria _ Porifera _ Buccinidae",1,0.002,0.2
+"Brachyura _ Mytilidae _ Echinoidea _ Asteroidea _ Actiniaria _ Porifera _ Buccinidae _ Pecten maximus",1,0.002,0.2
+"Buccinoidea _ Echinoidea _ Brachyura",1,0.002,0.2
+"Buccinum undatum",1,0.002,0.2
+"Callionymus lyra",1,0.002,0.2
+"Callista chione",1,0.002,0.2
+"Callogorgia verticillata",1,0.002,0.2
+"Calonectris diomedea diomedea",1,0.002,0.2
+"Cancer pagurus _ Asterias rubens _ Buccinum undatum",1,0.002,0.2
+"Caretta caretta _ Chelonia mydas _ Dermochelys coriacea",1,0.002,0.2
+"Caryophyllia (Caryophyllia) smithii _ Gersemia _ Drifa glomerata",1,0.002,0.2
+"Caulerpa taxifolia",1,0.002,0.2
+"Cephalopoda _ Octopus",1,0.002,0.2
+"Cepphus grylle _ Fulmarus glacialis",1,0.002,0.2
+"Cerastoderma edule _ Macoma balthica _ Mya arenaria",1,0.002,0.2
+"Chelonia mydas _ Caretta caretta",1,0.002,0.2
+"Chelonia mydas _ Caretta caretta _ Dermochelys coriacea",1,0.002,0.2
+"Chelonioidea",1,0.002,0.2
+"Chionoecetes opilio",1,0.002,0.2
+"Chondrocladia (Chondrocladia) grandis _ Geodia barretti _ Geodia macandrewii",1,0.002,0.2
+"Citharus linguatula",1,0.002,0.2
+"Citharus linguatula _ Astropecten irregularis",1,0.002,0.2
+"Clangula hyemalis",1,0.002,0.2
+"Cliona celata",1,0.002,0.2
+"Clupea harengus _ Gadus morhua",1,0.002,0.2
+"Clupeidae _ Engraulidae _ Myctophidae _ Macroramphosus scolopax _ Gadidae _ Serranidae _ Carangidae _ Coryphaenidae _ Mullidae _ Sparidae _ Pomacentridae _ Scombridae _ Blenniidae _ Centrolophidae _ Balistidae _ Bothidae",1,0.002,0.2
+"Conger",1,0.002,0.2
+"Conger conger _ Muraena helena",1,0.002,0.2
+"Corallium rubrum _ Eunicella cavolini",1,0.002,0.2
+"Coregonus albula",1,0.002,0.2
+"Coregonus lavaretus",1,0.002,0.2
+"Coris julis _ Serranus cabrilla _ Serranus scriba",1,0.002,0.2
+"Craniella zetlandica _ Phakellia _ Axinella",1,0.002,0.2
+"Crustacea _ Asteroidea _ Gastropoda _ Osteichthyes _ Cnidaria _ Bivalvia _ Polychaeta",1,0.002,0.2
+"Crustacea _ Bivalvia _ Sipuncula _ Cnidaria _ Ophiuroidea _ Polychaeta _ Holothuroidea _ Scaphopoda _ Echiurida _ Gastropoda _ Nematoda _ Platyhelminthes _ Nemertea _ Phoronida",1,0.002,0.2
+"Crustacea _ Cephalopoda _ Elasmobranchii _ Cnidaria _ Teleostei",1,0.002,0.2
+"Crustacea _ Echinoidea",1,0.002,0.2
+"Crustacea _ Mollusca _ Echinodermata _ Polychaeta",1,0.002,0.2
+"Dasyatis pastinaca",1,0.002,0.2
+"Decapoda",1,0.002,0.2
+"Decapoda _ Aristeus antennatus",1,0.002,0.2
+"Decapoda _ Bivalvia _ Echinodermata _ Gastropoda _ Polychaeta _ Peracarida",1,0.002,0.2
+"Delphinidae",1,0.002,0.2
+"Delphinus delphis _ Phocoena phocoena",1,0.002,0.2
+"Delphinus delphis _ Stenella coeruleoalba",1,0.002,0.2
+"Delphinus delphis _ Tursiops truncatus",1,0.002,0.2
+"Delphinus delphis ponticus _ Phocoena phocoena relicta _ Tursiops truncatus ponticus",1,0.002,0.2
+"Desmophyllum pertusum",1,0.002,0.2
+"Desmophyllum pertusum _ Madrepora oculata _ Funiculina quadrangularis _ Isidella elongata",1,0.002,0.2
+"Desmophyllum pertusum _ Paragorgia arborea",1,0.002,0.2
+"Desmophyllum pertusum _ Solenosmilia variabilis _ Madrepora oculata",1,0.002,0.2
+"Dicentrarchus labrax",1,0.002,0.2
+"Dicentrarchus labrax _ Solea solea _ Trisopterus capelanus _ Mullus barbatus _ Mullus surmuletus",1,0.002,0.2
+"Diplodus annularis _ Lithognathus mormyrus",1,0.002,0.2
+"Diplodus annularis _ Lithognathus mormyrus _ Lophius budegassa _ Merluccius merluccius _ Mullus barbatus _ Pagellus acarne _ Pagellus bogaraveo _ Pagellus erythrinus _ Scorpaena notata _ Spicara flexuosum _ Trachurus trachurus",1,0.002,0.2
+"Diplodus annularis _ Serranus scriba _ Coris julis",1,0.002,0.2
+"Diplodus sargus",1,0.002,0.2
+"Diplodus sargus _ Diplodus vulgaris",1,0.002,0.2
+"Diplodus sargus _ Labrus merula _ Labrus viridis _ Sciaena umbra _ Scorpaena scrofa _ Sparus aurata",1,0.002,0.2
+"Diplodus vulgaris _ Diplodus sargus _ Spondyliosoma cantharus _ Sarpa salpa",1,0.002,0.2
+"Dipturus oxyrinchus _ Raja asterias",1,0.002,0.2
+"Donax trunculus",1,0.002,0.2
+"Donax trunculus _ Bivalvia _ Echinoidea",1,0.002,0.2
+"Donax trunculus _ Chamelea gallina _ Mactra stultorum _ Polybius vernalis _ Echinocardium mediterraneum",1,0.002,0.2
+"Echiichthys vipera _ Gadus morhua _ Lepidorhombus whiffiagonis _ Lophius piscatorius _ Merluccius merluccius _ Micromesistius poutassou _ Pomatoschistus _ Pollachius virens",1,0.002,0.2
+"Echinoidea",1,0.002,0.2
+"Echinoidea _ Crustacea _ Mollusca _ Annelida",1,0.002,0.2
+"Echinoidea _ Gastropoda",1,0.002,0.2
+"Echinus",1,0.002,0.2
+"Echiura _ Brachiopoda _ Bryozoa _ Actiniaria _ Octocorallia _ Anthozoa _ Ceriantharia _ Hydrozoa _ Zoantharia _ Amphipoda _ Anomura _ Brachyura _ Cirripedia _ Cumacea _ Isopoda _ Mysidae _ Decapoda _ Pycnogonida _ Asteroidea _ Crinoidea _ Echinoidea _ Holothuroidea _ Ophiuroidea _ Aplacophora _ Bivalvia _ Gastropoda _ Polyplacophora _ Nemertea _ Polychaeta _ Priapulida _ Sipuncula _ Ascidiacea _ Platyhelminthes",1,0.002,0.2
+"Elasmobranchii _ Cephalopoda",1,0.002,0.2
+"Elasmobranchii _ Holocephali",1,0.002,0.2
+"Eledone cirrhosa _ Eledone moschata",1,0.002,0.2
+"Eledone moschata _ Sepia officinalis",1,0.002,0.2
+"Ellisella paraplexauroides",1,0.002,0.2
+"Engraulis encrasicolus",1,0.002,0.2
+"Ensis",1,0.002,0.2
+"Epinephelidae _ Epinephelus",1,0.002,0.2
+"Epinephelus _ Coris julis _ Sciaena umbra _ Scorpaena",1,0.002,0.2
+"Epinephelus marginatus _ Sciaena umbra",1,0.002,0.2
+"Etrumeus sadina",1,0.002,0.2
+"Flabellum (Ulocyathus) macandrewi _ Ditrupa arietina _ Funiculina quadrangularis _ Spatangus purpureus",1,0.002,0.2
+"Fulmarus glacialis",1,0.002,0.2
+"Fulmarus glacialis _ Morus bassanus _ Stercorarius skua _ Larus marinus _ Larus fuscus _ Larus argentatus _ Rissa tridactyla",1,0.002,0.2
+"Gadus morhua _ Merlangius merlangus _ Melanogrammus aeglefinus",1,0.002,0.2
+"Gadus morhua _ Pleuronectes platessa _ Solea solea _ Crangon crangon",1,0.002,0.2
+"Gadus morhua _ Pollachius pollachius",1,0.002,0.2
+"Gadus morhua _ Pollachius pollachius _ Merluccius merluccius _ Molva molva",1,0.002,0.2
+"Gadus morhua _ Pollachius virens",1,0.002,0.2
+"Gadus morhua _ Trisopterus minutus _ Pleuronectes platessa _ Myoxocephalus scorpius",1,0.002,0.2
+"Galeus melastomus _ Etmopterus spinax",1,0.002,0.2
+"Galeus melastomus _ Scyliorhinus canicula",1,0.002,0.2
+"Gavia stellata",1,0.002,0.2
+"Globicephala melas",1,0.002,0.2
+"Haematopus ostralegus",1,0.002,0.2
+"Halichoerus grypus _ Phoca vitulina",1,0.002,0.2
+"Helicolenus dactylopterus",1,0.002,0.2
+"Hippoglossoides platessoides _ Limanda limanda",1,0.002,0.2
+"Holothuria _ Palinurus elephas _ Maja crispata _ Dardanus arrosor",1,0.002,0.2
+"Holothuroidea",1,0.002,0.2
+"Hoplostethus atlanticus",1,0.002,0.2
+"Hoplostethus mediterraneus",1,0.002,0.2
+"Hyperoplus lanceolatus",1,0.002,0.2
+"Illex coindetii",1,0.002,0.2
+"Illex coindetii _ Eledone cirrhosa",1,0.002,0.2
+"Isidella elongata _ Foraminifera _ Porifera _ Cnidaria _ Sipuncula _ Mollusca _ Annelida _ Crustacea _ Bryozoa _ Echinodermata",1,0.002,0.2
+"Labridae _ Serranidae _ Mullus",1,0.002,0.2
+"Larus argentatus",1,0.002,0.2
+"Larus argentatus _ Larus",1,0.002,0.2
+"Larus audouinii _ Larus cachinnans",1,0.002,0.2
+"Larus audouinii _ Puffinus yelkouan",1,0.002,0.2
+"Larus cachinnans _ Larus audouinii",1,0.002,0.2
+"Larus canus _ Larus argentatus _ Larus marinus _ Rissa tridactyla _ Fulmarus glacialis",1,0.002,0.2
+"Larus michahellis",1,0.002,0.2
+"Larus ridibundus _ Larus argentatus _ Larus marinus",1,0.002,0.2
+"Lepidorhombus whiffiagonis _ Merluccius merluccius _ Lophius",1,0.002,0.2
+"Lithognathus mormyrus",1,0.002,0.2
+"Lophius",1,0.002,0.2
+"Lophius budegassa _ Lophius piscatorius",1,0.002,0.2
+"Lophius budegassa _ Lophius piscatorius _ Diplodus annularis _ Pagellus acarne _ Serranus hepatus _ Lepidotrigla cavillone _ Merluccius merluccius _ Pagellus erythrinus _ Spicara flexuosum _ Mullus barbatus",1,0.002,0.2
+"Lophius budegassa _ Merluccius merluccius _ Trachurus trachurus _ Mullus barbatus _ Pagellus erythrinus _ Parapenaeus longirostris",1,0.002,0.2
+"Lophius piscatorius _ Callionymus lyra _ Microstomus kitt _ Limanda limanda _ Microchirus variegatus _ Pleuronectes platessa _ Blenniidae _ Chelidonichthys cuculus _ Zeugopterus punctatus _ Trisopterus minutus _ Merluccius merluccius _ Gadus morhua _ Molva molva",1,0.002,0.2
+"Lophius piscatorius _ Lepidorhombus boscii _ Trachurus trachurus _ Merluccius merluccius",1,0.002,0.2
+"Macropodia _ Inachus dorsettensis _ Pecten maximus _ Nudibranchia _ Asterias rubens _ Astropecten irregularis _ Porania (Porania) pulvillus _ Anseropoda placenta _ Ophiura ophiura _ Ophiura albida _ Ophiothrix fragilis _ Psammechinus miliaris",1,0.002,0.2
+"Mactra stultorum _ Polybius vernalis _ Echinocardium mediterraneum _ Ensis minor _ Penaeus kerathurus _ Portumnus latipes _ Acanthocardia tuberculata",1,0.002,0.2
+"Madrepora oculata _ Dendrophyllia cornigera _ Desmophyllum pertusum",1,0.002,0.2
+"Madrepora oculata _ Desmophyllum pertusum",1,0.002,0.2
+"Maja brachydactyla _ Atelecyclus undecimdentatus",1,0.002,0.2
+"Maja crispata",1,0.002,0.2
+"Melanogrammus aeglefinus",1,0.002,0.2
+"Merlangius merlangus _ Platichthys flesus",1,0.002,0.2
+"Merluccius _ Lophius budegassa _ Lophius piscatorius _ Mullus barbatus",1,0.002,0.2
+"Merluccius merluccius _ Lepidorhombus _ Lophius",1,0.002,0.2
+"Merluccius merluccius _ Micromesistius poutassou _ Lepidorhombus boscii _ Lepidorhombus whiffiagonis _ Lophius piscatorius _ Lophius budegassa _ Scyliorhinus canicula",1,0.002,0.2
+"Merluccius merluccius _ Mullus barbatus",1,0.002,0.2
+"Merluccius merluccius _ Mullus barbatus _ Lophius piscatorius _ Micromesistius poutassou",1,0.002,0.2
+"Merluccius merluccius _ Mullus barbatus _ Mullus surmuletus _ Sepia officinalis _ Octopus vulgaris _ Pagellus erythrinus _ Parapenaeus longirostris _ Aristaeomorpha foliacea _ Aristeus antennatus",1,0.002,0.2
+"Micromesistius poutassou _ Sardina pilchardus _ Engraulis encrasicolus",1,0.002,0.2
+"Microstomus kitt _ Hippoglossoides platessoides _ Limanda limanda _ Trisopterus luscus _ Trisopterus minutus _ Eutrigla gurnardus",1,0.002,0.2
+"Microstomus kitt _ Pleuronectes platessa",1,0.002,0.2
+"Mollusca _ Asteroidea _ Ophiuroidea _ Echinoidea _ Holothuroidea _ Nemertea _ Sipuncula _ Decapoda _ Annelida",1,0.002,0.2
+"Mollusca _ Crustacea _ Echinodermata _ Anthozoa",1,0.002,0.2
+"Mora moro _ Lepidopus caudatus",1,0.002,0.2
+"Morus bassanus",1,0.002,0.2
+"Mullus barbatus _ Merluccius merluccius _ Lophius budegassa",1,0.002,0.2
+"Mullus barbatus _ Zeus faber _ Sparidae _ Triglidae",1,0.002,0.2
+"Mullus surmuletus _ Merluccius merluccius",1,0.002,0.2
+"Mustelus _ Squalus _ Galeus melastomus _ Scyliorhinus canicula",1,0.002,0.2
+"Mustelus mustelus _ Mustelus asterias _ Scyliorhinus stellaris _ Squalus blainville",1,0.002,0.2
+"Mycale (Mycale) massa _ Suberites domuncula _ Tethya citrina _ Tedania (Tedania) anhelans _ Halichondria (Halichondria) panicea _ Raspailia (Raspailia) viminalis _ Crambe crambe _ Mycale (Aegogropila) contarenii _ Chondrilla nucula",1,0.002,0.2
+"Myliobatis aquila",1,0.002,0.2
+"Myliobatis aquila _ Aetomylaeus bovinus",1,0.002,0.2
+"Nemertea _ Nematoda _ Cirratulidae _ Paraonidae _ Harpacticoida _ Copepoda _ Sididae",1,0.002,0.2
+"Nephrops norvegicus _ Carcinus maenas _ Cancer pagurus _ Asterias rubens",1,0.002,0.2
+"Nephrops norvegicus _ Parapenaeus longirostris",1,0.002,0.2
+"Nucula nitidosa _ Phoronis muelleri _ Owenia fusiformis _ Echinocardium cordatum",1,0.002,0.2
+"Oblada melanurus _ Belone belone _ Trachurus _ Seriola dumerili _ Coryphaena hippurus _ Sphyraena viridensis _ Auxis rochei _ Sarda sarda _ Scomber colias _ Pomatomus saltatrix _ Dicentrarchus labrax _ Euthynnus alletteratus _ Dentex dentex _ Diplodus sargus _ Diplodus vulgaris",1,0.002,0.2
+"Octocorallia _ Anthozoa _ Madrepora oculata _ Savalia savaglia _ Leiopathes glaberrima",1,0.002,0.2
+"Octocorallia _ Porifera _ Scleractinia",1,0.002,0.2
+"Octopoda",1,0.002,0.2
+"Octopodidae",1,0.002,0.2
+"Octopus vulgaris _ Loligo vulgaris _ Sepia officinalis",1,0.002,0.2
+"Octopus vulgaris _ Sepia",1,0.002,0.2
+"Octopus vulgaris _ Todarodes sagittatus",1,0.002,0.2
+"Ophiuroidea _ Phoronida _ Bivalvia _ Polychaeta _ Gastropoda _ Echinodermata _ Nephrops norvegicus",1,0.002,0.2
+"Orcinus orca",1,0.002,0.2
+"Oxynotus centrina _ Scyliorhinus canicula _ Galeus melastomus",1,0.002,0.2
+"Pagellus _ Boops _ Triglidae _ Trachinus draco",1,0.002,0.2
+"Pagellus acarne",1,0.002,0.2
+"Pagellus bogaraveo",1,0.002,0.2
+"Pagellus bogaraveo _ Chelidonichthys cuculus _ Callionymus lyra _ Lepidorhombus whiffiagonis _ Merluccius merluccius _ Mullus surmuletus _ Pagellus acarne _ Raja montagui _ Leucoraja naevus _ Scyliorhinus canicula _ Trachinus draco _ Chelidonichthys lucerna",1,0.002,0.2
+"Pagellus bogaraveo _ Chelidonichthys cuculus _ Callionymus lyra _ Lepidorhombus whiffiagonis _ Merluccius merluccius _ Mullus surmuletus _ Pagellus acarne _ Trachinus draco _ Chelidonichthys lucerna",1,0.002,0.2
+"Pagellus erythrinus",1,0.002,0.2
+"Pagellus erythrinus _ Mullus barbatus _ Lophius",1,0.002,0.2
+"Pagurus bernhardus",1,0.002,0.2
+"Pagurus prideaux",1,0.002,0.2
+"Palinurus elephas",1,0.002,0.2
+"Paralithodes camtschaticus",1,0.002,0.2
+"Paramuricea clavata",1,0.002,0.2
+"Parapenaeus longirostris _ Nephrops norvegicus",1,0.002,0.2
+"Pecten jacobaeus _ Aequipecten opercularis _ Mimachlamys varia _ Hexaplex trunculus _ Bolinus brandaris",1,0.002,0.2
+"Pennatula phosphorea _ Virgularia mirabilis",1,0.002,0.2
+"Pennatulidae _ Kophobelemnon stelliferum",1,0.002,0.2
+"Pennatulidae _ Pennatula rubra",1,0.002,0.2
+"Peracarida",1,0.002,0.2
+"Perca flavescens _ Sander vitreus",1,0.002,0.2
+"Peyssonnelia",1,0.002,0.2
+"Phocoena phocoena relicta",1,0.002,0.2
+"Physeter macrocephalus",1,0.002,0.2
+"Plesionika",1,0.002,0.2
+"Pleuronectes platessa _ Limanda limanda _ Hippoglossoides platessoides",1,0.002,0.2
+"Pleuronectes platessa _ Limanda limanda _ Merlangius merlangus _ Gadus morhua",1,0.002,0.2
+"Pleuronectes platessa _ Merlangius merlangus _ Microstomus kitt _ Gadus morhua",1,0.002,0.2
+"Pleuronectes platessa _ Nephrops norvegicus",1,0.002,0.2
+"Pleuronectes platessa _ Solea solea _ Limanda limanda _ Platichthys flesus",1,0.002,0.2
+"Pleuronectiformes",1,0.002,0.2
+"Polybius depurator _ Squilla mantis",1,0.002,0.2
+"Polychaeta",1,0.002,0.2
+"Polychaeta _ Bivalvia",1,0.002,0.2
+"Polychaeta _ Crustacea _ Mollusca",1,0.002,0.2
+"Polychaeta _ Mollusca _ Crustacea _ Echinoidea _ Cnidaria _ Phoronida _ Sipuncula _ Platyhelminthes _ Nemertea _ Nematoda",1,0.002,0.2
+"Polychaeta _ Sipuncula",1,0.002,0.2
+"Pomatomus saltatrix",1,0.002,0.2
+"Porifera",1,0.002,0.2
+"Porifera _ Cnidaria _ Bryozoa",1,0.002,0.2
+"Porifera _ Cnidaria _ Bryozoa _ Echinodermata _ Crustacea",1,0.002,0.2
+"Porifera _ Cnidaria _ Bryozoa _ Tunicata",1,0.002,0.2
+"Posidonia",1,0.002,0.2
+"Posidonia oceanica",1,0.002,0.2
+"Prionace glauca",1,0.002,0.2
+"Protozoa _ Hydrozoa _ Bryozoa _ Polychaeta _ Bivalvia",1,0.002,0.2
+"Puffinus mauretanicus",1,0.002,0.2
+"Puffinus mauretanicus _ Calonectris diomedea",1,0.002,0.2
+"Puffinus mauretanicus _ Calonectris diomedea diomedea _ Hydrobates pelagicus _ Phalacrocorax aristotelis _ Larus audouinii _ Larus michahellis",1,0.002,0.2
+"Raja _ Selachii",1,0.002,0.2
+"Raja asterias",1,0.002,0.2
+"Raja clavata _ Leucoraja naevus",1,0.002,0.2
+"Raja clavata _ Raja asterias",1,0.002,0.2
+"Raja clavata _ Torpedo marmorata",1,0.002,0.2
+"Raja montagui _ Leucoraja naevus _ Scyliorhinus canicula",1,0.002,0.2
+"Raja radula _ Torpedo marmorata _ Torpedo torpedo",1,0.002,0.2
+"Rapana venosa _ Anadara kagoshimensis _ Chamelea gallina _ Polybius depurator",1,0.002,0.2
+"Sabellaria spinulosa",1,0.002,0.2
+"Sabellidae _ Serpulidae _ Neopycnodonte cochlear",1,0.002,0.2
+"Saccharina latissima",1,0.002,0.2
+"Salmo trutta",1,0.002,0.2
+"Sardina pilchardus",1,0.002,0.2
+"Sardina pilchardus _ Engraulis encrasicolus",1,0.002,0.2
+"Saurida undosquamis _ Tetraodontidae _ Nemipterus randalli",1,0.002,0.2
+"Sciaena umbra",1,0.002,0.2
+"Scophthalmus maeoticus",1,0.002,0.2
+"Scophthalmus maximus _ Platichthys flesus",1,0.002,0.2
+"Scorpaena porcus _ Symphodus tinca _ Mullus surmuletus",1,0.002,0.2
+"Scorpaena scrofa",1,0.002,0.2
+"Scorpaena scrofa _ Pagellus erythrinus _ Phycis phycis _ Sciaena umbra",1,0.002,0.2
+"Scorpaenidae _ Scorpaena porcus _ Symphodus tinca",1,0.002,0.2
+"Scyliorhinus canicula _ Galeus melastomus",1,0.002,0.2
+"Scyliorhinus canicula _ Raja clavata",1,0.002,0.2
+"Scyliorhinus canicula _ Raja clavata _ Torpedo marmorata",1,0.002,0.2
+"Scyliorhinus canicula _ Scyliorhinus stellaris",1,0.002,0.2
+"Scyliorhinus stellaris",1,0.002,0.2
+"Sebastes",1,0.002,0.2
+"Selachii _ Raja _ Rajidae",1,0.002,0.2
+"Sepia officinalis _ Loligo vulgaris",1,0.002,0.2
+"Serpulidae",1,0.002,0.2
+"Serranus cabrilla",1,0.002,0.2
+"Serranus scriba _ Diplodus annularis",1,0.002,0.2
+"Serranus scriba _ Symphodus tinca _ Spicara maena _ Scorpaena porcus _ Pagellus acarne",1,0.002,0.2
+"Solea _ Platichthys flesus _ Scophthalmus maximus _ Scophthalmus rhombus",1,0.002,0.2
+"Solea solea _ Pleuronectes platessa _ Scophthalmus maximus _ Scophthalmus rhombus",1,0.002,0.2
+"Solea solea _ Scophthalmus rhombus",1,0.002,0.2
+"Sparidae _ Mullidae _ Serranidae _ Haemulidae _ Labridae _ Muraenidae _ Pomacentridae",1,0.002,0.2
+"Sparus aurata",1,0.002,0.2
+"Sparus aurata _ Thunnus thynnus _ Scomber scombrus _ Coryphaena hippurus _ Dicentrarchus labrax _ Euthynnus alletteratus _ Trachurus trachurus _ Lichia amia _ Pomatomus saltatrix _ Lithognathus mormyrus _ Anguilla anguilla _ Boops boops _ Diplodus sargus _ Sarda sarda _ Pagellus erythrinus _ Merluccius merluccius _ Scomber colias _ Mugil _ Merlangius merlangus _ Spicara maena _ Chelidonichthys lucerna _ Oblada melanurus _ Platichthys flesus _ Umbrina cirrosa _ Scophthalmus rhombus _ Scophthalmus maximus",1,0.002,0.2
+"Sprattus sprattus",1,0.002,0.2
+"Squilla mantis",1,0.002,0.2
+"Stenella coeruleoalba _ Tursiops truncatus _ Delphinus delphis",1,0.002,0.2
+"Stomatopoda _ Charybdis (Archias) longicollis",1,0.002,0.2
+"Suberites massa",1,0.002,0.2
+"Terebellidae _ Gastrosaccus spinifer _ Echinocyamus pusillus",1,0.002,0.2
+"Thecostraca _ Anthozoa _ Hydrozoa _ Gastropoda _ Bivalvia _ Polychaeta _ Calcarea _ Gymnolaemata _ Stenolaemata _ Globothalamea",1,0.002,0.2
+"Torpedo marmorata _ Torpedo torpedo _ Tetronarce nobiliana",1,0.002,0.2
+"Trachinotus ovatus",1,0.002,0.2
+"Trachurus trachurus _ Sardina pilchardus _ Engraulis encrasicolus",1,0.002,0.2
+"Trisopterus esmarkii",1,0.002,0.2
+"Tursiops truncatus _ Delphinus delphis _ Stenella coeruleoalba",1,0.002,0.2
+"Tursiops truncatus _ Delphinus delphis _ Stenella coeruleoalba _ Grampus griseus _ Phocoena phocoena",1,0.002,0.2
+"Umbellula encrinus",1,0.002,0.2
+"Virgularia mirabilis _ Pennatula phosphorea",1,0.002,0.2

@@ -3,7 +3,7 @@
 #
 #     Step 3. Detailed look at species and creating new version of the data with corrected taxonomy
 #
-#     By Karin van der Reijden, small adjustions by Esther D. Beukhof
+#     By Karin van der Reijden, small adjustments by Esther D. Beukhof
 #     April 2022
 #
 #####################################################################################################################-
@@ -18,7 +18,7 @@ library(stringr)
 library(worms)
 
 datPath                              <- "Routput/"
-outPath                              <- "Routput/"
+outPath                              <- "Routput/Manuscript/"
 
 #-----------------------------------------------#
 # Read in data
@@ -49,7 +49,7 @@ if(dataset == "cropped"){
   specs                                <- tstrsplit(data$Species.taxonomic.group.s., split="_")
   dat1                                 <- data
   dat1$Species.taxonomic.group.s.      <- specs[[1]] 
-  length(unique(dat1$Species.taxonomic.group.s.)) # 401 unique records
+  length(unique(dat1$Species.taxonomic.group.s.)) # 400 unique records
   for(iL in c(2:length(specs))){
     dat2                               <- data
     dat2$Species.taxonomic.group.s.    <- specs[[iL]]
@@ -57,7 +57,7 @@ if(dataset == "cropped"){
     dat1                               <- rbind(dat1, dat2)
     rm(dat2)
   }# end iL loop. 
-  length(unique(dat1$Species.taxonomic.group.s.)) # 921 unique records
+  length(unique(dat1$Species.taxonomic.group.s.)) # 922 unique records
   
   dat1$Species.taxonomic.group.s.      <- str_trim(dat1$Species.taxonomic.group.s., side="both"); length(unique(dat1$Species.taxonomic.group.s.)) # 680 unique records
   dat1$Species.taxonomic.group.s.      <- str_to_lower(dat1$Species.taxonomic.group.s.); length(unique(dat1$Species.taxonomic.group.s.)) # 660 unique records
@@ -167,7 +167,7 @@ if(dataset == "cropped"){
   #-----------------------------------------------#
   rm(list=ls())
   datPath                              <- "Routput/"
-  outPath                              <- "Routput/"
+  outPath                              <- "Routput/Manuscript/"
   
   dat1                                 <- readRDS(paste0(outPath, "dat1a.rds"))
   specsIDed                            <- readRDS(paste0(outPath, "specsIDed3.rds"))
@@ -183,7 +183,7 @@ if(dataset == "cropped"){
   #-----------------------------------------------#
   rm(list=ls())
   datPath                              <- "Routput/"
-  outPath                              <- "Routput/"
+  outPath                              <- "Routput/Manuscript/"
   
   dat1                                 <- readRDS(paste0(outPath, "dat1b.rds"))
   dat2                                 <- dat1[,c("Species.taxonomic.group.s.", "Ecosystem.component_level1", 
@@ -232,7 +232,7 @@ if(dataset == "cropped"){
   #-----------------------------------------------#
   rm(list=ls())
   datPath                              <- "Routput/"
-  outPath                              <- "Routput/"
+  outPath                              <- "Routput/Manuscript/"
   
   data                                 <- readRDS(data, file=paste0(datPath, "data.rds"))
   dat1                                 <- readRDS(paste0(outPath, "dat1b.rds"))
@@ -307,7 +307,7 @@ if(dataset == "cropped"){
   #-----------------------------------------------#
   rm(list=ls())
   datPath                              <- "Routput/"
-  outPath                              <- "Routput/"
+  outPath                              <- "Routput/Manuscript/"
   
   # load original dataset
   data                                 <- readRDS(file=paste0(datPath, "data.rds"))

@@ -368,6 +368,9 @@ datRespvar[datRespvar$SW.ID == "SW4_1332" & datRespvar$Response.variable_paper %
 datRespvar[datRespvar$SW.ID == "SW4_1332" & datRespvar$Response.variable_paper == "variation in taxonomic distinctness", "Response.variable_paper"] <- 
   "variation in taxonomic distinctness of discarded fraction"
 
+datRespvar$Direction.of.relationship[datRespvar$SW.ID %in% "SW4_1841"] <- "Positive"
+datRespvar$Magnitude.of.relationship[datRespvar$SW.ID %in% "SW4_1841"] <- "Cluster A comprises seven non-target species plus beam trawl effort, which are all (28x) significantly positively correlated. Although the effort series resides in this cluster, a causal effect of beam trawling seems highly unlikely, at least for some species (starry ray, lemon sole, and long rough dab) whose centres of distribution lie outside Area 6, where beam trawl effort is concentrated. However, it is also possible that beam trawl effort is indicative of an overall increasing trend in demersal effort. One characteristic all species in this cluster appear to have in common is that they mature at a relatively small size compared to most commercial demersal species. Early maturation might put them in an advantageous position."
+
 # Based on litter case study
 datRespvar[datRespvar$SW.ID == "SW4_0725" & datRespvar$Ecosystem.component_level1 == "Fish_teleost", "Direction.of.relationship"] <- "Negative"
 datRespvar[datRespvar$SW.ID == "SW4_0725" & datRespvar$Ecosystem.component_level1 == "Cephalopods", "Direction.of.relationship"] <- "Negative"
