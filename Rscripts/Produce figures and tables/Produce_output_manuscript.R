@@ -14,7 +14,7 @@
 rm(list = ls())
 
 #-----------------------------------------------#
-# Load libraries and set Paths ----
+# Load libraries and set paths ----
 #-----------------------------------------------#
 
 library(data.table)
@@ -67,6 +67,7 @@ data_allScreened$Region               <- with(data_allScreened, ifelse(RegionSEA
 
 # Load fate of papers
 load(paste0(datPath, "FatePapers.Rdata"))
+
 
 
 #####################################################################################################################-
@@ -129,6 +130,22 @@ nrPaps                               <- aggregate(SW.ID ~ Year, data, function(x
 write.csv(nrPaps, paste0(outPath,"nr papers per year.csv"), row.names = FALSE)
 
 
+# Try calculating the doubling time to compare it with Pedersen et al. (2015) doi:10.1007/s10584-015-1536-6
+# To follow Pedersen et al., only do it for papers since 1990.
+datPlot                              <- subset(nrPaps, Year >= 1990)
+
+plot(datPlot$Year, log2(datPlot$SW.ID), yaxt="n",
+     xlab="Year",ylab="log2(Number of papers published)")
+s <- 1:round(log2(max(datPlot$SW.ID)))
+axis(2, s, parse(text = sprintf("2^%d", s)))
+
+fm <- lm(log2(SW.ID) ~ Year, datPlot)
+abline(fm)
+
+doubling.time <- 1/coef(fm)[[2]]
+doubling.time
+
+
 
 #-----------------------------------------------#
 ## Table of number of papers by region ----
@@ -156,6 +173,18 @@ nrPaps
 
 write.csv(nrPaps, paste0(outPath,"nr papers ecosystem component.csv"), row.names = FALSE)
 
+# Calculate percentage of papers that studied multiple ecosystem components
+ecoStud                              <- data.frame(SW.ID = unique(data$SW.ID) , nrStudied = NA)
+paps                                 <- unique(data$SW.ID)
+for(iPap in 1:length(paps)){
+  
+  # Select paper
+  subdat           <- subset(data, SW.ID %in% paps[iPap])
+  
+  # Count number of unique ecosystem components studied
+  ecoStud$nrStudied[iPap]    <- length(unique(subdat$Ecosystem.component_level1))
+}
+nrow(ecoStud[ecoStud$nrStudied > 1,]) / length(unique(data$SW.ID)) * 100 #19%
 
 
 #-----------------------------------------------#
@@ -183,6 +212,11 @@ nrPaps$Perc                          <- nrPaps$Prop * 100
 nrPaps
 
 write.csv(nrPaps, paste0(outPath,"nr papers fishery.csv"), row.names = FALSE)
+
+
+# Check recreational fisheries papers
+recr                                 <- subset(data, Fishery.type %in% "Recreational")
+length(unique(recr$SW.ID)) #31
 
 
 
@@ -480,7 +514,9 @@ ggsave("SankeyFateRecords.png", sankey, path=outPath,
 EcoComp                               <- data[, .(NrPaps = length(unique(SW.ID))),
                                               by = Ecosystem.component_level1]
 EcoComp                               <- EcoComp[order(NrPaps),,]
-
+EcoComp$Ecosystem.component_level1    <- sub("_"," ", EcoComp$Ecosystem.component_level1)
+EcoComp$Ecosystem.component_level1[EcoComp$Ecosystem.component_level1 == "Fish cartilaginous"]   <- "Cartilaginous fish"
+EcoComp$Ecosystem.component_level1[EcoComp$Ecosystem.component_level1 == "Fish teleost"]   <- "Teleost fish"
 
 png(paste0(outPath, "EcoComp.png"), width=1000, height=750, res=100)
 par(mar=c(5, 15, 2, 2))
@@ -546,6 +582,8 @@ Pressure                              <- data[, .(NrPaps = length(unique(SW.ID))
                                               by = Pressure.type]
 Pressure                              <- Pressure[order(NrPaps, decreasing = TRUE),,]
 Pressure                              <- Pressure[order(NrPaps),,]
+Pressure$Pressure.type                <- sub("_"," ", Pressure$Pressure.type)
+Pressure$Pressure.type                <- sub("_"," ", Pressure$Pressure.type)
 
 png(paste0(outPath, "Pressures.png"), width=1200, height=750, res=100)
 par(mar=c(5, 28, 2, 2))
@@ -560,6 +598,29 @@ dev.off()
 
 
 #-----------------------------------------------#
+## Barplot of fishing gears studied ----
+#-----------------------------------------------#
+
+Gears                                <- data[,.(NrPaps = length(unique(SW.ID))),
+                                             by = c("Gear_level1")]
+Gears                                <- Gears[order(NrPaps),,]
+Gears$Gear_level1                    <- sub("_"," ", Gears$Gear_level1)
+Gears$Gear_level1                    <- sub("_"," ", Gears$Gear_level1)
+
+png(paste0(outPath, "Gears.png"), width=1050, height=750, res=100)
+par(mar=c(5, 15, 2, 2))
+b                                     <- barplot(Gears$NrPaps, horiz=TRUE, axes=F, xlim=c(0,350), col=viridis(3)[2])
+box()
+axis(2, at=b, labels=Gears$Gear_level1, las=1, cex.axis=2)
+axis(1, at= seq(0,350, 50), labels=seq(0, 350, 50), cex.axis=1.5)
+# text(x=192, y=0, paste0("Total number of unique papers: ", length(unique(data$SW.ID))), pos=4)
+text(x=Gears$NrPaps+10, y=b, Gears$NrPaps, cex = 1.3)
+axis(1, at=190, tick=F, line=2, label="Number of papers", cex.axis=2)
+dev.off()
+
+
+
+#-----------------------------------------------#
 ## Barplot of fishing gears studied - Comm only ----
 #-----------------------------------------------#
 
@@ -569,7 +630,7 @@ Gears                                <- subset(Gears, Fishery.type %in% "Commerc
 Gears$Gear_level1                    <- with(Gears, ifelse(is.na(Gear_level1),"Unspecified",Gear_level1))
 Gears                                <- Gears[order(NrPaps),,]
 
-tiff(paste0(outPath, "GearsComm.tiff"), width=1050, height=750, res=100)
+png(paste0(outPath, "GearsComm.png"), width=1050, height=750, res=100)
 par(mar=c(5, 15, 2, 2))
 b                                     <- barplot(Gears$NrPaps, horiz=TRUE, axes=F, xlim=c(0,350), col=viridis(3)[2])
 box()
@@ -592,6 +653,8 @@ Gears$Gear_level1                    <- ifelse(is.na(Gears$Gear_level1)==T, "Not
 GearLevels                           <- unique(Gears$Fishery.type)
 uniquePaps                           <- data[,.(NrPaps = length(unique(SW.ID))),
                                              by = "Fishery.type"]
+Gears$Gear_level1                    <- sub("_"," ", Gears$Gear_level1)
+Gears$Gear_level1[Gears$Gear_level1 %in% "Hooks and Lines"]   <- "Hooks and lines"
 
 png(paste0(outPath, "GearsStudiedCommRecr.png"), width= 1500, height = 1000, res = 100)
 par(mfrow=c(1,2))
@@ -632,26 +695,47 @@ write.table(tab, file=paste0(outPath, "sampl method ecosystem comp.csv"), sep=";
 ## Heatmap of ecosystem component level 1 vs pressure type level 1 ----
 #-----------------------------------------------#
 
+# Prepare data
 EcoPress                             <- data[, .(NrPaps = length(unique(SW.ID))),
                                              by = c("Ecosystem.component_level1", "Pressure.type")]
 EcoPressExp                          <- expand.grid(Ecosystem.component_level1=EcoPress$Ecosystem.component_level1, 
                                                     Pressure.type=EcoPress$Pressure.type)
 EcoPressExp                          <- EcoPressExp[!duplicated(EcoPressExp),]
 EcoPressExp                          <- merge(EcoPress, EcoPressExp, by=c("Ecosystem.component_level1","Pressure.type"), all=TRUE)
-# EcoPressExp$NrPaps[is.na(EcoPressExp$NrPaps)] <- 0
 
-p <- ggplot(EcoPressExp, aes(x=Pressure.type, y=Ecosystem.component_level1, fill=NrPaps)) +
+# Remove understrike
+EcoPressExp$Pressure.type            <- sub("_"," ", EcoPressExp$Pressure.type)
+EcoPressExp$Pressure.type            <- sub("_"," ", EcoPressExp$Pressure.type)
+EcoPressExp$Ecosystem.component_level1    <- sub("_"," ", EcoPressExp$Ecosystem.component_level1)
+EcoPressExp$Ecosystem.component_level1[EcoPressExp$Ecosystem.component_level1 == "Fish cartilaginous"]   <- "Cartilaginous fish"
+EcoPressExp$Ecosystem.component_level1[EcoPressExp$Ecosystem.component_level1 == "Fish teleost"]   <- "Teleost fish"
+
+# Determine order
+EcoComp                              <- aggregate(NrPaps ~ Ecosystem.component_level1, EcoPressExp, sum)
+EcoComp                              <- EcoComp[order(EcoComp$NrPaps),]
+orderEco                             <- EcoComp$Ecosystem.component_level1
+
+Pressure                             <- aggregate(NrPaps ~ Pressure.type, EcoPressExp, sum)
+Pressure                             <- Pressure[order(Pressure$NrPaps, decreasing = TRUE),]
+orderPress                           <- Pressure$Pressure.type
+
+p <- ggplot(EcoPressExp, aes(x=Pressure.type, y=reorder(Ecosystem.component_level1, NrPaps), fill=NrPaps)) +
   geom_tile() +
   scale_fill_viridis_c(name="No. papers", na.value = "transparent") +
+  scale_x_discrete(limits = orderPress) +
+  scale_y_discrete(limits = orderEco) +
   labs(x="Pressure type", y="Ecosystem component") +
   theme_bw() +
   theme(panel.grid.major = element_blank(),
         axis.text = element_text(size=12),
         axis.text.x = element_text(angle = 45, hjust = 1, vjust = 1),
-        axis.title = element_text(size=12))
+        axis.title = element_text(size=14),
+        legend.position = c(0.92,0.2))
 print(p)
 
-ggsave("EcoPress_heatmap.png", p, path=outPath, width = 9, height = 7)
+ggsave("EcoPress_heatmap.png", p, path=outPath, width = 8, height = 6.5)
+
+ggsave("EcoPress_heatmap.tiff", p, path=outPath, width = 8, height = 6.5)
 
 
 
@@ -846,12 +930,14 @@ ggsave("EcoCompRegion3.tiff", p, path=outPath, width=9, height = 6)
 #-----------------------------------------------#
 
 Regions                               <- data[, .(NrPaps = length(unique(SW.ID))), by = c("Region","Year")]
+Regions$Region[Regions$Region %in% "NE-Atlantic"]   <- "Northeast Atlantic"
 RegionsExpand                         <- expand.grid(Year=seq(min(data$Year),max(data$Year)), 
                                                      Region=unique(Regions$Region))
 Regions                               <- merge(RegionsExpand, Regions, by=c("Region","Year"), all.x = TRUE)
 
 RegionOrder                           <- data[, .(NrPaps = length(unique(SW.ID))), by = "Region"]
 RegionOrder                           <- RegionOrder[order(NrPaps, decreasing = T),,]
+RegionOrder$Region[RegionOrder$Region %in% "NE-Atlantic"]   <- "Northeast Atlantic"
 
 Regions$Region                        <- factor(Regions$Region, levels = RegionOrder$Region)
 
@@ -1356,7 +1442,42 @@ ggsave("Sankey5.png", sankey, path=outPath,
 tempDat         <- data[, c("SW.ID","Fishery.type","Gear_level1","Pressure.type","Ecosystem.component_level1","Response.variable_category")]
 tempDat         <- tempDat[!duplicated(tempDat),]
 tempDat$value   <- 1
+tempDat$Pressure.type                 <- sub("_"," ", tempDat$Pressure.type)
+tempDat$Pressure.type                 <- sub("_"," ", tempDat$Pressure.type)
 tempDat$Gear_level1[is.na(tempDat$Gear_level1)]   <- "Not specified"
+tempDat$Gear_level1                   <- sub("_"," ", tempDat$Gear_level1)
+tempDat$Gear_level1                   <- sub("_"," ", tempDat$Gear_level1)
+tempDat$Ecosystem.component_level1    <- sub("_"," ", tempDat$Ecosystem.component_level1)
+tempDat$Ecosystem.component_level1[tempDat$Ecosystem.component_level1 == "Fish cartilaginous"]   <- "Cartilaginous fish"
+tempDat$Ecosystem.component_level1[tempDat$Ecosystem.component_level1 == "Fish teleost"]   <- "Teleost fish"
+
+## Order factors for plotting nicely
+tempDat$Fishery.type <- reorder(x = as.factor(tempDat$Fishery.type),
+                                              X = as.factor(tempDat$Fishery.type),
+                                              FUN = length)
+tempDat$Fishery.type <- forcats::fct_rev(tempDat$Fishery.type)
+
+tempDat$Gear_level1 <- reorder(x = as.factor(tempDat$Gear_level1),
+                                X = as.factor(tempDat$Gear_level1),
+                                FUN = length)
+tempDat$Gear_level1 <- forcats::fct_rev(tempDat$Gear_level1)
+
+tempDat$Pressure.type <- reorder(x = as.factor(tempDat$Pressure.type),
+                               X = as.factor(tempDat$Pressure.type),
+                               FUN = length)
+tempDat$Pressure.type <- forcats::fct_rev(tempDat$Pressure.type)
+
+tempDat$Ecosystem.component_level1 <- reorder(x = as.factor(tempDat$Ecosystem.component_level1),
+                                                    X = as.factor(tempDat$Ecosystem.component_level1),
+                                                    FUN = length)
+tempDat$Ecosystem.component_level1 <- forcats::fct_rev(tempDat$Ecosystem.component_level1)
+
+tempDat$Response.variable_category <- reorder(x = as.factor(tempDat$Response.variable_category),
+                                 X = as.factor(tempDat$Response.variable_category),
+                                 FUN = length)
+tempDat$Response.variable_category <- forcats::fct_rev(tempDat$Response.variable_category)
+
+tempDat <- droplevels(tempDat)
 
 # Transform data so that it can be handled by ggplot2
 datTr           <- gather_set_data(tempDat, 
@@ -1386,6 +1507,15 @@ ggsave(plot = p,
        width = 170,
        height = 90,
        units = "mm")
+
+ggsave(plot = p,
+       filename = paste0(outPath, "Sankey6.tiff"),
+       device = "png",
+       dpi = 300,
+       width = 170,
+       height = 90,
+       units = "mm")
+
 
 
 #####################################################################################################################-
@@ -1446,6 +1576,10 @@ ggsave(plot = p,
 #-----------------------------------------------#
 ## Creating map with Region specific info ----
 #-----------------------------------------------#
+
+load(paste0(GISpath, "RegionalSeas.RData"))
+world                                <- st_read("Q:/20-forskning/12-gis/Dynamisk/GEOdata2020/BasicLayers/Coastlines/World/ESRI World/World_Countries_Generalized.shp")
+
 Regions                              <- data[, .(NrPaps = length(unique(SW.ID))), 
                                               by = Region]
 Regions                              <- Regions[order(NrPaps),,]
@@ -1483,9 +1617,10 @@ dev.off()
 RegionalSeas$Xloc              <- ifelse(RegionalSeas$Region == "Baltic Sea", 4950000, RegionalSeas$Xloc) #change points to a better location
 RegionalSeas$Yloc              <- ifelse(RegionalSeas$Region == "Baltic Sea", 4010000, RegionalSeas$Yloc) #change points to a better location
 
-png(paste0(outPath, "RegMapSmall.png"), width = 700, height = 600, res = 100)
+png(paste0(outPath, "RegMapSmall2.png"), width = 700, height = 600, res = 100)
 par(mar=c(1,1,1,1))
 plot(st_geometry(RegionalSeas), col=RegionalSeas$colcode, border=F)
+plot(st_geometry(world), col="grey", border=F)
 text(RegionalSeas$NrPaps, x= RegionalSeas$Xloc, y=RegionalSeas$Yloc, col=RegionalSeas$textcol, font=2, cex=1.4)
 text(x= 1E6, y=6.1E6, "Global studies:", font=3, cex=1.4)
 text(x=1e6, y=5.85e6, paste0(subset(Regions, Region == "Global")$NrPaps), font=2, cex=1.4)
@@ -1496,27 +1631,118 @@ text(x=0.5e6, y=1.72e6, "Number of papers", cex=1.2)
 dev.off()
 
 
+## ggplot2 smaller version
+xlim    <- c(290000,6912085)
+ylim    <- c(861290.7,6962509)
 
-# ## Create a smaller version
-# load(paste0(GISpath, "RegionalSeas.Rdata"))
-# 
-# library(dplyr)
-# RegionalSeas <- RegionalSeas %>%
-#   left_join(Regions, by="Region")
-# 
-# ### Settings for plotting
-# library(rnaturalearth)
-# world   <- ne_countries(scale = "medium", returnclass = "sf")
-# xlim    <- c(290000,6912085)
-# ylim    <- c(861290.7,6962509)
-# colours <- brewer.pal(9,"YlOrRd") 
-# 
-# ggplot(data = RegionalSeas) +
-#   geom_sf(data = RegionalSeas, aes(fill=NrPaps)) +
-#   # geom_sf(data = world, fill="white", col="white") +
-#   coord_sf(xlim = xlim, ylim = ylim) +
-#   scale_fill_viridis_c() +
-#   theme_bw()
+RegionalSeas$Xloc              <- ifelse(RegionalSeas$Region == "Baltic Sea", 4950000, RegionalSeas$Xloc) #change points to a better location
+RegionalSeas$Yloc              <- ifelse(RegionalSeas$Region == "Baltic Sea", 4010000, RegionalSeas$Yloc) #change points to a better location
+
+p <- ggplot() +
+  geom_sf(data = RegionalSeas, aes(fill=NrPaps), colour="grey") +
+  geom_sf(data = world, fill="grey", colour=NA) +
+  coord_sf(xlim = xlim, ylim = ylim) +
+  scale_fill_viridis_c(name = "No. papers", trans = "log2") +
+  geom_text(data = RegionalSeas, aes(Xloc, Yloc, label = NrPaps), 
+            colour=c("white","white","white","white","white","black","white","white"),
+            fontface = "bold",
+            size = 7) +
+  geom_text(aes(x= 1.15E6, y=1.5E6, label = "Global studies: 2"), size = 7) +
+  theme_bw() +
+  theme(axis.title = element_blank(),
+        axis.ticks = element_blank(),
+        axis.text = element_blank(),
+        legend.position = c(0.0869, 0.867),
+        legend.text = element_text(size=13),
+        legend.title = element_text(size=15),
+        legend.background = element_rect(fill="transparent"))
+
+ggsave("RegSmallMap3_log2.png", p, path = outPath)
+
+ggsave("RegSmallMap3_log2.tiff", p, path = outPath, width = 7, height = 6.5)
+
+
+#-----------------------------------------------#
+### COMBINED PLOT: Map of papers by region and barplot with papers by year ----
+#-----------------------------------------------#
+
+# Plot 1: map with number of papers by regional sea
+load(paste0(GISpath, "RegionalSeas.RData"))
+world                                <- st_read("Q:/20-forskning/12-gis/Dynamisk/GEOdata2020/BasicLayers/Coastlines/World/ESRI World/World_Countries_Generalized.shp")
+
+Regions                              <- data[, .(NrPaps = length(unique(SW.ID))), 
+                                             by = Region]
+Regions                              <- Regions[order(NrPaps),,]
+RegCol                               <- data.frame(colcode = viridis(max(Regions$NrPaps)+2),
+                                                   value = c(1:c(max(Regions$NrPaps)+2)))
+Regions$Colcode                      <- RegCol$colcode [match(Regions$NrPaps, RegCol$value)]
+load(paste0(GISpath, "RegionalSeas.Rdata"))
+RegionalSeas$colcode                 <- Regions$Colcode [match(RegionalSeas$Region, Regions$Region)]
+Centerpoints                         <- st_coordinates(st_centroid(RegionalSeas))
+RegionalSeas$Xloc              <- Centerpoints[,1]
+RegionalSeas$Yloc              <- Centerpoints[,2]
+RegionalSeas$NrPaps            <- Regions$NrPaps [match(RegionalSeas$Region, Regions$Region)]
+RegionalSeas$textcol           <- ifelse(RegionalSeas$NrPaps >50, "black", "white")
+
+xlim    <- c(290000,6912085)
+ylim    <- c(861290.7,6962509)
+
+RegionalSeas$Xloc              <- ifelse(RegionalSeas$Region == "Baltic Sea", 4950000, RegionalSeas$Xloc) #change points to a better location
+RegionalSeas$Yloc              <- ifelse(RegionalSeas$Region == "Baltic Sea", 4010000, RegionalSeas$Yloc) #change points to a better location
+
+p1 <- ggplot() +
+  geom_sf(data = RegionalSeas, aes(fill=NrPaps), colour="grey") +
+  geom_sf(data = world, fill="grey", colour=NA) +
+  coord_sf(xlim = xlim, ylim = ylim) +
+  scale_fill_viridis_c(name = "No. papers", trans = "log2") +
+  geom_text(data = RegionalSeas, aes(Xloc, Yloc, label = NrPaps), 
+            colour=c("white","white","white","white","white","black","white","white"),
+            fontface = "bold",
+            size = 6) +
+  geom_text(aes(x= 1.2E6, y=1.5E6, label = "Global studies: 2"), size = 6) +
+  theme_bw() +
+  theme(axis.title = element_blank(),
+        axis.ticks = element_blank(),
+        axis.text = element_blank(),
+        legend.position = c(0.09, 0.83),
+        legend.text = element_text(size=10),
+        legend.title = element_text(size=10),
+        # legend.background = element_rect(fill="transparent"),
+        legend.box.background = element_rect(colour="black"))
+
+# Plot 2: barplot number of papers and cumulative number of papers per year
+YearRet                          <- data[,.(NrPaps = length(unique(SW.ID))),
+                                         by = c("Year")]
+YearRet                          <- YearRet[order(YearRet$Year),]
+YearRet$cumNrPaps                <- cumsum(YearRet$NrPaps)
+YearRet2                         <- expand.grid(Year=seq(min(data$Year),max(data$Year)))
+YearRet2                         <- merge(YearRet2, YearRet, by="Year", all.x=TRUE)
+YearRet2$col                     <- with(YearRet2, ifelse(Year == 2022, "incomplete","complete"))
+coeff                            <- 10
+
+p2 <- ggplot(YearRet2, aes(x=Year)) +
+  geom_bar(aes(y=NrPaps, fill=col), stat="identity") +
+  geom_point(aes(y=cumNrPaps / coeff), size=1) +
+  geom_line(aes(y=cumNrPaps / coeff), linewidth=0.1) +
+  scale_x_continuous(n.breaks = 8) +
+  scale_y_continuous(expand = c(0,0), limits = c(0, 55), n.breaks = 10,
+                     sec.axis = sec_axis(~.*coeff, name="Cumulative number of papers")) +
+  scale_fill_manual(values = rev(viridis(3)[-3])) +
+  labs(x="Year", y="Number of papers") +
+  theme_bw() +
+  theme(legend.position = "none",
+        axis.text = element_text(size = 12),
+        strip.text = element_text(size = 12),
+        axis.title = element_text(size = 14),
+        axis.title.x = element_text(margin = margin(t = 3, unit = "mm")),
+        axis.title.y.right = element_text(margin = margin(l = 3, unit = "mm")),
+        panel.grid.minor = element_blank())
+
+# Combine plots and save
+p <- p1 + p2 + plot_annotation(tag_levels = 'A') +  plot_layout(widths = c(2, 1))
+
+ggsave("RegSmallMap_YearBarCum.png", p, path = outPath, width=10, height = 6)
+ggsave("RegSmallMap_YearBarCum.tiff", p, path = outPath, width=10, height = 6)
 
 
 
@@ -1676,6 +1902,24 @@ nrow(tempLit[tempLit$Response.variable_category == "Mortality", ])/nrow(tempLit)
 tempLitNoDupl       <- tempLit[!duplicated(tempLit), ]
 tempLitNoDupl$value <- 1
 tempLitNoDupl$Analytical.method.used.for.inference <- NULL
+tempLitNoDupl$Ecosystem.component_level1    <- sub("_"," ", tempLitNoDupl$Ecosystem.component_level1)
+tempLitNoDupl$Ecosystem.component_level1[tempLitNoDupl$Ecosystem.component_level1 == "Fish cartilaginous"]   <- "Cartilaginous fish"
+tempLitNoDupl$Ecosystem.component_level1[tempLitNoDupl$Ecosystem.component_level1 == "Fish teleost"]   <- "Teleost fish"
+
+## Order factors for plotting nicely
+tempLitNoDupl$Ecosystem.component_level1 <- reorder(x = as.factor(tempLitNoDupl$Ecosystem.component_level1),
+                                                X = as.factor(tempLitNoDupl$Ecosystem.component_level1),
+                                                FUN = length)
+tempLitNoDupl$Ecosystem.component_level1 <- forcats::fct_rev(tempLitNoDupl$Ecosystem.component_level1)
+
+tempLitNoDupl$Response.variable_category <- reorder(x = as.factor(tempLitNoDupl$Response.variable_category),
+                                                X = as.factor(tempLitNoDupl$Response.variable_category),
+                                                FUN = length)
+tempLitNoDupl$Response.variable_category <- forcats::fct_rev(tempLitNoDupl$Response.variable_category)
+
+
+tempLitNoDupl <- droplevels(tempLitNoDupl)
+
 
 # Transform data so that it can be handled by ggplot2
 tempLitTr           <- gather_set_data(tempLitNoDupl, 
@@ -1690,7 +1934,7 @@ p <- ggplot(tempLitTr, aes(x, id = SW.ID, split = y, value = value)) +
   scale_x_continuous(breaks = c(2:5),
                      labels = c("Ecosystem component","Sampling methodology","Response measured","Analytic method"),
                      expand = c(0.06,0.05)) +
-  scale_fill_viridis_d(direction = -1) +
+  scale_fill_viridis_d(direction = 1) +
   theme_bw() +
   theme(panel.grid = element_blank(),
         axis.title = element_blank(),
@@ -1701,6 +1945,14 @@ print(p)
 ggsave(plot = p,
        filename = paste0(outPath, "litterMethods.png"),
        device = "png",
+       dpi = 300,
+       width = 170,
+       height = 100,
+       units = "mm")
+
+ggsave(plot = p,
+       filename = paste0(outPath, "litterMethods.tiff"),
+       device = "tiff",
        dpi = 300,
        width = 170,
        height = 100,
@@ -1789,7 +2041,12 @@ RegionEco                            <- litter[, .(NrPaps = length(unique(SW.ID)
 RegionEcoTot                         <- RegionEco[, .(TotNrPaps = sum(NrPaps)),
                                                   by = "Region"]
 RegionEco                            <- merge(RegionEco, RegionEcoTot, by="Region")
+RegionEco$Region[RegionEco$Region %in% "NE-Atlantic"] <- "Northeast Atlantic"
 RegionEcoTot$Region[RegionEcoTot$Region %in% "NE-Atlantic"] <- "Northeast Atlantic"
+RegionEco$Ecosystem.component_level1    <- sub("_"," ", RegionEco$Ecosystem.component_level1)
+RegionEco$Ecosystem.component_level1[RegionEco$Ecosystem.component_level1 == "Fish cartilaginous"]   <- "Cartilaginous fish"
+RegionEco$Ecosystem.component_level1[RegionEco$Ecosystem.component_level1 == "Fish teleost"]   <- "Teleost fish"
+
 
 p1 <- ggplot(RegionEco, aes(NrPaps, reorder(Region, TotNrPaps), fill=Ecosystem.component_level1)) +
   geom_bar(stat="identity") +
@@ -1813,6 +2070,8 @@ Gears                                <- litter[,.(NrPaps = length(unique(SW.ID))
 GearTot                              <- Gears[, .(TotNrPaps = sum(NrPaps)),
                                               by = "Gear_level1"]
 Gears                                <- merge(Gears, GearTot, by="Gear_level1")
+Gears$Gear_level1                    <- sub("_"," ", Gears$Gear_level1)
+Gears$Gear_level1                    <- sub("_"," ", Gears$Gear_level1)
 
 p2 <- ggplot(Gears, aes(NrPaps, reorder(Gear_level1, TotNrPaps), fill=Ecosystem.component_level1)) +
   geom_bar(stat="identity") +
@@ -1835,6 +2094,8 @@ p <- p1 / p2 + plot_annotation(tag_levels = 'A')
 print(p)
 
 ggsave("litterEcoRegion_GearsEco.png", p, path=outPath, width = 8, height = 6)
+
+ggsave("litterEcoRegion_GearsEco.tiff", p, path=outPath, width = 8, height = 6)
 
 
 #-----------------------------------------------#
@@ -2088,7 +2349,7 @@ pSpatial <- ggplot() +
                                    name="No. of\npapers") +
   scale_x_discrete(drop = FALSE) +
   scale_y_discrete(drop = FALSE) +
-  ylab("Spatial sampling eesolution (m)") +
+  ylab("Spatial sampling resolution (m)") +
   xlab("Spatial sampling scale (m)") +
   theme_few() +
   theme(text = element_text(size = 9), 
@@ -2120,6 +2381,7 @@ p <- pSpatial / pTemporal + plot_annotation(tag_levels = 'A')
 
 ggsave("litter_spatialTemporalScales.png", p, path=outPath, width = 7, height = 7)
 
+ggsave("litter_spatialTemporalScales.tiff", p, path=outPath, width = 7, height = 7)
 
 ### Some numbers ----
 length(unique(litter$SW.ID[litter$Resolution...Temporal %in% "snapshot/no repeated sampling"]))
@@ -2135,6 +2397,12 @@ length(unique(litter$SW.ID[litter$Resolution...Temporal %in% "snapshot/no repeat
 #====-
 tempLitDR <- litter[, c("SW.ID","Ecosystem.component_level1", "Response.variable_category", "Direction.of.relationship")]
 tempLitDR <- tempLitDR[!duplicated(tempLitDR), ]
+tempLitDR$Ecosystem.component_level1    <- sub("_"," ", tempLitDR$Ecosystem.component_level1)
+tempLitDR$Ecosystem.component_level1[tempLitDR$Ecosystem.component_level1 == "Fish cartilaginous"]   <- "Cartilaginous fish"
+tempLitDR$Ecosystem.component_level1[tempLitDR$Ecosystem.component_level1 == "Fish teleost"]   <- "Teleost fish"
+# tempLitDR$Ecosystem.component_level1    <- factor(tempLitDR$Ecosystem.component_level1, levels = rev(c("Teleost fish","Reptiles",
+#                                                                                                       "Marine mammals","Cephalopods",
+#                                                                                                       "Cartilaginous fish","Benthos")))
 
 # tempLitDR$Response.variable_category <- ifelse(tempLitDR$Response.variable_category %in% "Survival","Mortality",
 #                                                ifelse(tempLitDR$Response.variable_category %in% c("Community composition"), "Biodiversity",
@@ -2184,6 +2452,14 @@ print(p)
 ggsave(plot = p,
        filename = paste0(outPath, "litterLinkage.png"),
        device = "png",
+       dpi = 300,
+       width = 170,
+       height = 100,
+       units = "mm")
+
+ggsave(plot = p,
+       filename = paste0(outPath, "litterLinkage.tiff"),
+       device = "tiff",
        dpi = 300,
        width = 170,
        height = 100,
@@ -2875,6 +3151,27 @@ length(unique(subset_PET$SW.ID[subset_PET$Pressure.variable_category %in% "Fishi
 
 
 #-----------------------------------------------#
+## Barplot with number of papers by region -----
+#-----------------------------------------------#
+
+Regions                               <- subset_PET[, .(NrPaps = length(unique(SW.ID))), by = "Region"]
+Regions                               <- Regions[, .(NrPaps = sum(NrPaps)), by="Region"]
+Regions                               <- Regions[order(NrPaps, decreasing = F),,]
+
+png(paste0(outPathPET, "Regions.png"), width=1000, height=750, res=100)
+par(mar=c(5, 15, 4, 2))
+b                                     <- barplot(Regions$NrPaps, horiz=TRUE, axes=F, xlim=c(0,max(Regions$NrPaps+20)), col=viridis(3)[2])
+box()
+axis(2, at=b, labels=Regions$Region, las=1, cex.axis=2)
+axis(1, at= seq(0,max(Regions$NrPaps), 50), labels=seq(0, max(Regions$NrPaps), 50), cex.axis=1.5)
+# title(main="Number of papers per region", cex.main=1.5, font.main=2)
+text(x=175, y=0, paste0("Total number of unique papers ", length(unique(data$SW.ID))), pos=4)
+text(x=Regions$NrPaps + 2, y=b, Regions$NrPaps, cex=1.3)
+axis(1, at=max(Regions$NrPaps)/2, tick=F, line=2, label="Number of papers", cex.axis=2)
+dev.off()
+
+
+#-----------------------------------------------#
 ## Ecosystem components ----
 #-----------------------------------------------#
 
@@ -3131,6 +3428,9 @@ EcoTot                               <- EcoComp[, .(TotNrPaps = sum(NrPaps)),
                                                 by = "Ecosystem.component_level1"]
 EcoComp                              <- merge(EcoComp, EcoTot, by="Ecosystem.component_level1")
 EcoComp$Region[EcoComp$Region %in% "NE-Atlantic"] <- "Northeast Atlantic"
+EcoComp$Ecosystem.component_level1    <- sub("_"," ", EcoComp$Ecosystem.component_level1)
+EcoComp$Ecosystem.component_level1[EcoComp$Ecosystem.component_level1 == "Fish cartilaginous"]   <- "Cartilaginous fish"
+EcoComp$Ecosystem.component_level1[EcoComp$Ecosystem.component_level1 == "Fish teleost"]   <- "Teleost fish"
 
 p1 <- ggplot(EcoComp, aes(NrPaps, reorder(Ecosystem.component_level1, TotNrPaps), fill=Region)) +
   geom_bar(stat="identity") +
@@ -3153,10 +3453,14 @@ print(p1)
 Gears                                <- subset_PET[,.(NrPaps = length(unique(SW.ID))),
                                                    by = c("Ecosystem.component_level1", "Gear_level1")]
 Gears$Gear_level1                    <- ifelse(is.na(Gears$Gear_level1)==T, "Not specified", 
-                                               ifelse(Gears$Gear_level1 == "Hooks_and_lines", "Hooks and Lines", Gears$Gear_level1))
+                                               ifelse(Gears$Gear_level1 == "Hooks_and_lines", "Hooks and lines", Gears$Gear_level1))
 GearTot                              <- Gears[, .(TotNrPaps = sum(NrPaps)),
                                               by = "Gear_level1"]
 Gears                                <- merge(Gears, GearTot, by="Gear_level1")
+Gears$Gear_level1                    <- sub("_"," ", Gears$Gear_level1)
+Gears$Ecosystem.component_level1    <- sub("_"," ", Gears$Ecosystem.component_level1)
+Gears$Ecosystem.component_level1[Gears$Ecosystem.component_level1 == "Fish cartilaginous"]   <- "Cartilaginous fish"
+Gears$Ecosystem.component_level1[Gears$Ecosystem.component_level1 == "Fish teleost"]   <- "Teleost fish"
 
 p2 <- ggplot(Gears, aes(NrPaps, reorder(Gear_level1, TotNrPaps), fill=Ecosystem.component_level1)) +
   geom_bar(stat="identity") +
@@ -3181,6 +3485,8 @@ print(p)
 
 ggsave("EcoCompRegion_GearsEcoComp.png", p, path=outPathPET, width = 8, height = 7)
 
+ggsave("EcoCompRegion_GearsEcoComp.tiff", p, path=outPathPET, width = 8, height = 7)
+
 
 
 #-----------------------------------------------#
@@ -3189,23 +3495,34 @@ ggsave("EcoCompRegion_GearsEcoComp.png", p, path=outPathPET, width = 8, height =
 
 EcoGear                             <- subset_PET[, .(NrPaps = length(unique(SW.ID))),
                                              by = c("Region","Ecosystem.component_level1", "Gear_level1")]
+EcoGear$Region[EcoGear$Region %in% "NE-Atlantic"] <- "Northeast Atlantic"
+
 EcoGearExp                          <- expand.grid(Region=EcoGear$Region,
                                                     Ecosystem.component_level1=EcoGear$Ecosystem.component_level1, 
                                                     Gear_level1=EcoGear$Gear_level1)
 EcoGearExp                          <- EcoGearExp[!duplicated(EcoGearExp),]
 EcoGearExp                          <- merge(EcoGear, EcoGearExp, by=c("Region","Ecosystem.component_level1","Gear_level1"), all=TRUE)
+
 EcoGearExp$Gear_level1              <- as.character(EcoGearExp$Gear_level1)
 EcoGearExp$Gear_level1[is.na(EcoGearExp$Gear_level1)]   <- "Not specified"
 
+EcoGearExp$Ecosystem.component_level1    <- sub("_"," ", EcoGearExp$Ecosystem.component_level1)
+EcoGearExp$Ecosystem.component_level1[EcoGearExp$Ecosystem.component_level1 == "Fish cartilaginous"]   <- "Cartilaginous fish"
+EcoGearExp$Ecosystem.component_level1[EcoGearExp$Ecosystem.component_level1 == "Fish teleost"]   <- "Teleost fish"
+EcoGearExp$Gear_level1              <- sub("_"," ", EcoGearExp$Gear_level1)
+EcoGearExp$Gear_level1              <- sub("_"," ", EcoGearExp$Gear_level1)
+
 p <- ggplot(EcoGearExp, aes(Gear_level1, Ecosystem.component_level1)) +
   geom_tile(aes(fill=NrPaps)) +
-  scale_fill_viridis_c(na.value = "white", name = "No.\npapers", n.breaks=6) +
+  scale_fill_viridis_c(na.value = "white", name = "No.\npapers", n.breaks=8) +
   labs(x="Gear", y="Ecosystem component") +
   theme_bw() +
   theme(axis.text.x = element_text(angle=90, vjust=0.5, hjust=1),
-        axis.text = element_text(size=12),
-        axis.title = element_text(size=14),
-        strip.text = element_text(size=12)) +
+        axis.text = element_text(size=14),
+        axis.title = element_text(size=16),
+        strip.text = element_text(size=14),
+        legend.title = element_text(size=12),
+        legend.text = element_text(size=12)) +
   facet_wrap(~Region)
 print(p)
 
@@ -3358,6 +3675,8 @@ p <- ggplot(Resp, aes(NrPaps, reorder(Response.variable_category, TotNrPaps), fi
 print(p)
 
 ggsave("RespVarMethods.png", p, path=outPathPET, width = 8, height = 4)
+
+ggsave("RespVarMethods.tiff", p, path=outPathPET, width = 8, height = 4)
 
 
 ## Alternative plot
@@ -3778,6 +4097,14 @@ print(p)
 ggsave(plot = p,
        filename = paste0(outPathPET, "Sankey_PressDirResp.png"),
        device = "png",
+       dpi = 300,
+       width = 170,
+       height = 90,
+       units = "mm")
+
+ggsave(plot = p,
+       filename = paste0(outPathPET, "Sankey_PressDirResp.tiff"),
+       device = "tiff",
        dpi = 300,
        width = 170,
        height = 90,
@@ -4364,3 +4691,5 @@ pTemporal <- ggplot() +
 p <- pSpatial / pTemporal + plot_annotation(tag_levels = 'A')
 
 ggsave("spatialTemporalScales.png", p, path=outPathPET, width = 7, height = 7)
+
+ggsave("spatialTemporalScales.tiff", p, path=outPathPET, width = 7, height = 7)
