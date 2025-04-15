@@ -519,6 +519,7 @@ EcoComp$Ecosystem.component_level1[EcoComp$Ecosystem.component_level1 == "Fish c
 EcoComp$Ecosystem.component_level1[EcoComp$Ecosystem.component_level1 == "Fish teleost"]   <- "Teleost fish"
 
 png(paste0(outPath, "EcoComp.png"), width=1000, height=750, res=100)
+# tiff(paste0(outPath, "EcoComp.tiff"), width=1000, height=750, res=100)
 par(mar=c(5, 15, 2, 2))
 b                                     <- barplot(EcoComp$NrPaps, horiz=TRUE, axes=F, xlim=c(0,230), col=viridis(3)[2])
 box()
@@ -563,6 +564,7 @@ ResVarCats                            <- ResVarCats[, .(NrPaps = length(unique(S
 ResVarCats                            <- ResVarCats[order(NrPaps),,]
 
 png(paste0(outPath, "ResVarCats.png"), width=1250, height=750, res=100)
+# tiff(paste0(outPath, "ResVarCats.tiff"), width=1250, height=750, res=100)
 par(mar=c(5, 25, 2, 2))
 b                                     <- barplot(ResVarCats$NrPaps, horiz=TRUE, axes=F, xlim=c(0,265), col=viridis(3)[2])
 box()
@@ -586,6 +588,7 @@ Pressure$Pressure.type                <- sub("_"," ", Pressure$Pressure.type)
 Pressure$Pressure.type                <- sub("_"," ", Pressure$Pressure.type)
 
 png(paste0(outPath, "Pressures.png"), width=1200, height=750, res=100)
+# tiff(paste0(outPath, "Pressures.tiff"), width=1200, height=750, res=100)
 par(mar=c(5, 28, 2, 2))
 b                                     <- barplot(Pressure$NrPaps, horiz=TRUE, axes=F, xlim=c(0,350), col=viridis(3)[2])
 box()
@@ -657,6 +660,7 @@ Gears$Gear_level1                    <- sub("_"," ", Gears$Gear_level1)
 Gears$Gear_level1[Gears$Gear_level1 %in% "Hooks and Lines"]   <- "Hooks and lines"
 
 png(paste0(outPath, "GearsStudiedCommRecr.png"), width= 1500, height = 1000, res = 100)
+# tiff(paste0(outPath, "GearsStudiedCommRecr.tiff"), width= 1500, height = 1000, res = 100)
 par(mfrow=c(1,2))
 par(mar=c(18,8,7,1))
 for(iType in seq_along(GearLevels)){
@@ -749,6 +753,7 @@ Methods                              <- Methods[order(NrPaps),,]
 
 
 png(paste0(outPath, "Methods.png"), width=1500, height=750, res=100)
+tiff(paste0(outPath, "Methods.tiff"), width=1500, height=750, res=100)
 par(mar=c(5, 30, 2, 2))
 b                                     <- barplot(Methods$NrPaps, horiz=TRUE, axes=F, xlim=c(0,185), col=viridis(3)[2])
 box()
@@ -980,6 +985,8 @@ p <- ggplot(Regions, aes(Year, NrPaps, fill=col)) +
 print(p)
 
 ggsave("YearRegion.png", p, path=outPath, width=8, height = 6)
+
+ggsave("YearRegion.tiff", p, path=outPath, width=8, height = 6)
 
 
 ## Calculate rate of increase in number of papers by region
@@ -1292,6 +1299,8 @@ p <- ggplot(FishTypeYear, aes(Year, NrPaps, fill=Fishery.type)) +
 print(p)
 
 ggsave("FishTypeYear.png", p, path=outPath, width = 5, height = 3.2)
+
+ggsave("FishTypeYear.tiff", p, path=outPath, width = 5, height = 3.2)
 
 
 
@@ -2985,6 +2994,8 @@ print(p)
 
 ggsave("YearBarBycatch.png", p, path=outPathPET, width = 3.2, height = 3.2)
 
+ggsave("YearBarBycatch.tiff", p, path=outPathPET, width = 3.2, height = 3.2)
+
 
 #-----------------------------------------------#
 ### Gears ----
@@ -3493,6 +3504,7 @@ ggsave("EcoCompRegion_GearsEcoComp.tiff", p, path=outPathPET, width = 8, height 
 ### Heatmap of gear and ecosystem component by region -----
 #-----------------------------------------------#
 
+# Prepare data
 EcoGear                             <- subset_PET[, .(NrPaps = length(unique(SW.ID))),
                                              by = c("Region","Ecosystem.component_level1", "Gear_level1")]
 EcoGear$Region[EcoGear$Region %in% "NE-Atlantic"] <- "Northeast Atlantic"
@@ -3503,18 +3515,29 @@ EcoGearExp                          <- expand.grid(Region=EcoGear$Region,
 EcoGearExp                          <- EcoGearExp[!duplicated(EcoGearExp),]
 EcoGearExp                          <- merge(EcoGear, EcoGearExp, by=c("Region","Ecosystem.component_level1","Gear_level1"), all=TRUE)
 
+# Re-name
 EcoGearExp$Gear_level1              <- as.character(EcoGearExp$Gear_level1)
 EcoGearExp$Gear_level1[is.na(EcoGearExp$Gear_level1)]   <- "Not specified"
-
 EcoGearExp$Ecosystem.component_level1    <- sub("_"," ", EcoGearExp$Ecosystem.component_level1)
 EcoGearExp$Ecosystem.component_level1[EcoGearExp$Ecosystem.component_level1 == "Fish cartilaginous"]   <- "Cartilaginous fish"
 EcoGearExp$Ecosystem.component_level1[EcoGearExp$Ecosystem.component_level1 == "Fish teleost"]   <- "Teleost fish"
 EcoGearExp$Gear_level1              <- sub("_"," ", EcoGearExp$Gear_level1)
 EcoGearExp$Gear_level1              <- sub("_"," ", EcoGearExp$Gear_level1)
 
+# Determine order
+EcoComp                              <- aggregate(NrPaps ~ Ecosystem.component_level1, EcoGearExp, sum)
+EcoComp                              <- EcoComp[order(EcoComp$NrPaps),]
+orderEco                             <- EcoComp$Ecosystem.component_level1
+
+Gear                                <- aggregate(NrPaps ~ Gear_level1, EcoGearExp, sum)
+Gear                                <- Gear[order(Gear$NrPaps, decreasing = TRUE),]
+orderGear                           <- Gear$Gear_level1
+
 p <- ggplot(EcoGearExp, aes(Gear_level1, Ecosystem.component_level1)) +
   geom_tile(aes(fill=NrPaps)) +
   scale_fill_viridis_c(na.value = "white", name = "No.\npapers", n.breaks=8) +
+  scale_x_discrete(limits = orderGear) +
+  scale_y_discrete(limits = orderEco) +
   labs(x="Gear", y="Ecosystem component") +
   theme_bw() +
   theme(axis.text.x = element_text(angle=90, vjust=0.5, hjust=1),
@@ -3527,6 +3550,8 @@ p <- ggplot(EcoGearExp, aes(Gear_level1, Ecosystem.component_level1)) +
 print(p)
 
 ggsave("EcoGearRegion.png", p, path=outPathPET, width=12, height = 9)
+
+ggsave("EcoGearRegion.tiff", p, path=outPathPET, width=12, height = 9)
 
 
 
